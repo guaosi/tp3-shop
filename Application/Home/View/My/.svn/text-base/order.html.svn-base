@@ -1,0 +1,135 @@
+<layout name="Common/layout" />
+	<link rel="stylesheet" href="__PUBLIC__/Home/style/home.css" type="text/css">
+	<link rel="stylesheet" href="__PUBLIC__/Home/style/order.css" type="text/css">
+	<script type="text/javascript" src="__PUBLIC__/Home/js/home.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/Admin/Styles/base.css" />
+<style type="text/css">
+	.new-btn-login-sp{
+		padding: 1px;
+		display: inline-block;
+		width: 75%;
+	}
+	.new-btn-login {
+		background-color: #02aaf1;
+		color: #FFFFFF;
+		font-weight: bold;
+		border: none;
+		width: 80%;
+		height: 25px;
+		border-radius: 5px;
+		font-size: 16px;
+	}
+	#btn-dd{
+		margin: 20px;
+		text-align: center;
+	}
+</style>
+<include file="Common/nav" />
+	<!-- 页面主体 start -->
+	<div class="main w1210 bc mt10">
+		<div class="crumb w1210">
+			<h2><strong>我的个人中心 </strong><span>> 我的订单</span></h2>
+		</div>
+		
+<include file="My/left" />
+
+		<!-- 右侧内容区域 start -->
+		<div class="content fl ml10">
+			<div class="order_hd">
+				<h3>我的订单</h3>
+				<dl>
+					<dt>便利提醒：</dt>
+					<dd>待付款（{$nocount}）</dd>
+					<dd>已付款（{$yescount}）</dd>
+				</dl>
+			</div>
+
+			<div class="order_bd mt10">
+				<table class="orders">
+					<thead>
+						<tr>
+							<th width="10%">订单号</th>
+							<th width="20%">订单商品</th>
+							<th width="10%">收货人</th>
+							<th width="20%">订单金额</th>
+							<th width="20%">下单时间</th>
+							<th width="10%">订单状态</th>
+							<th width="10%">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+					<volist name="data" id="vo_data">
+						<tr>
+							<td><a href="">{$vo_data['id']}</a></td>
+							<td><?php $sm_logo=explode(',',$vo_data['sm_logo']);$goodsid=explode(',',$vo_data['goods_id']);?>
+								<?php for($i=0;$i<count($goodsid);$i++):?>
+								<a href="__MODULE__/goods/goods/id/{$goodsid[$i]}">{:showImg($sm_logo[$i])}</a>
+								<?php endfor;?>
+							</td>
+							<td>{$vo_data['shr_name']}</td>
+							<td>￥{$vo_data['total_price']}</td>
+							<td>{$vo_data['addtime']|date='Y-m-d H:i:s',###}</td>
+							<td><if condition="$vo_data['pay_status'] eq 是">已支付<else />
+								<form method="post" action="__MODULE__/order/pay" target="_blank">
+
+                        <span class="new-btn-login-sp">
+                            <button class="new-btn-login"  type="submit" style="text-align:center;">付 款</button>
+                        </span>
+										<input type="hidden" name="orderId" value="{$vo_data['id']}">
+
+								</form>
+							</if></td>
+							<td><a href="">查看</a><if condition="$vo_data['pay_status'] eq 否"> | <a href="javaScript:;" data-id="{$vo_data['id']}" class="dela">取消订单</a></if></td>
+						</tr>
+					</volist>
+					</tbody> 
+				</table>
+				<!-- 分页开始 -->
+				<table id="page-table" cellspacing="0">
+					<tr>
+						<td width="70%">&nbsp;</td>
+						<td align="center" nowrap="true">
+							<div class="pagin">
+								<div class="pagination ue-clear">
+									<div class="pagin-list">
+										{$page}
+									</div>
+									<div class="pxofy">共 {$count} 条记录</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</table>
+				<!-- 分页结束 -->
+			</div>
+		</div>
+		<!-- 右侧内容区域 end -->
+	</div>
+	<!-- 页面主体 end-->
+<include file="Common/foot" />
+<script type="text/javascript">
+        $('.dela').on('click',function () {
+            if(confirm('确定要取消这个订单吗？'))
+            {
+                var data_id=$(this).attr('data-id');
+                $.ajax({
+                    url:'__CONTROLLER__/del/id/'+data_id,
+                    type:'get',
+                    dataType:'json',
+                    success:function (data) {
+                        var newdata=eval(data);
+                        if(data['flag']==1)
+                        {
+                            alert('删除成功');
+                            location.reload();
+                        }
+                        else
+                        {
+                            alert('删除失败');
+                        }
+                    }
+                });
+            }
+
+        });
+</script>

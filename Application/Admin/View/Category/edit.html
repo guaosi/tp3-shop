@@ -1,0 +1,45 @@
+<layout name="layout" />
+
+<div class="main-div">
+    <form name="main_form" method="POST" action="__SELF__">
+        <input type="hidden" name="id" value="{$data['id']}">
+        <table cellspacing="1" cellpadding="3" width="100%">
+            <tr>
+                <td class="label">所属分类：</td>
+                <td>
+                    <select name="pid">
+                        <option value="0">顶级分类</option>
+                        <volist name="category" id="vo_category">
+                            <if condition="!(in_array($vo_category['id'],$child_id))">
+                            <option value="{$vo_category['id']}" <if condition="$data['pid'] eq $vo_category['id']">selected='selected'</if>>{:str_repeat('-',$vo_category['level']*8)}{$vo_category['cate_name']}</option>
+                            </if>
+                        </volist>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">分类名称：</td>
+                <td>
+                    <input  type="text" name="cate_name" size=40 value="{$data['cate_name']}"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">是否推荐到楼层：</td>
+                <td>
+                    <input type="radio" name="is_floor"  value="是" <if condition="$data['is_floor'] eq '是'">checked="checked"</if> /> 是
+                    <input type="radio" name="is_floor"  value="否" <if condition="$data['is_floor'] eq '否'">checked="checked"</if> /> 否
+                </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 " />
+                    <input type="reset" class="button" value=" 重置 " />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+<script>
+</script>

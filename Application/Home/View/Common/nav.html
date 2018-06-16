@@ -1,0 +1,201 @@
+<script src="__PUBLIC__/layer/layer.js"></script>
+<!-- 头部 start -->
+<div class="header w1210 bc mt15">
+    <!-- 头部上半部分 start 包括 logo、搜索、用户中心和购物车结算 -->
+    <div class="logo w1210">
+        <h1 class="fl"><a href="/"><img src="__PUBLIC__/Home/images/logo.png" alt="京西商城"></a></h1>
+        <!-- 头部搜索 start -->
+        <div class="search fl">
+            <div class="search_form">
+                <div class="form_left fl"></div>
+                <form name="search" method="get" class="fl" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
+
+                    <input id="key" name="key" type="text" class="txt" value="<if condition="I('get.key') eq ''">请输入商品关键字<else />{:I('get.key')}</if>" />
+                    <input onclick="location.href='__MODULE__/search/key_search/key/'+$('#key').val()" type="button" class="btn" value="搜索" />
+                </form>
+                <div class="form_right fl"></div>
+            </div>
+
+            <div style="clear:both;"></div>
+
+            <div class="hot_search">
+                <strong>热门搜索:</strong>
+                <a href="">D-Link无线路由</a>
+                <a href="">休闲男鞋</a>
+                <a href="">TCL空调</a>
+                <a href="">耐克篮球鞋</a>
+            </div>
+        </div>
+        <!-- 头部搜索 end -->
+
+        <!-- 用户中心 start-->
+        <div class="user fl">
+            <dl>
+                <dt>
+                    <em></em>
+                    <a href="__MODULE__/My/order">用户中心</a>
+                    <b></b>
+                </dt>
+                <dd>
+                    <div class="prompt" id="prompt1">
+
+                    </div>
+                    <div class="uclist mt10">
+                        <ul class="list1 fl">
+                            <li><a href="__MODULE__/My/order">我的订单></a></li>
+                        </ul>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <div class="viewlist mt10">
+                        <h3>最近浏览的商品：</h3>
+                        <ul id="history_top_ul">
+
+                        </ul>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <!-- 用户中心 end-->
+
+        <!-- 购物车 start -->
+        <div class="cart fl">
+            <dl>
+                <dt>
+                    <a href="__MODULE__/Cart/lst" id="cart_list">去购物车结算</a>
+                    <b></b>
+                </dt>
+                <dd>
+                    <div class="prompt" id="cart_list_div">
+                        <img src="__PUBLIC__/Home/images/Loading.gif">
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <!-- 购物车 end -->
+    </div>
+    <!-- 头部上半部分 end -->
+
+    <div style="clear:both;"></div>
+
+    <!-- 导航条部分 start -->
+    <div class="nav w1210 bc mt10">
+        <!--  商品分类部分 start-->
+        <div class="category fl <if condition='$show_nav eq 0'>cat1</if>"> <!-- 非首页，需要添加cat1类 -->
+            <div class="cat_hd <if condition='$show_nav eq 0'>off</if>">  <!-- 注意，首页在此div上只需要添加cat_hd类，非首页，默认收缩分类时添加上off类，鼠标滑过时展开菜单则将off类换成on类 -->
+                <h2>全部商品分类</h2>
+                <em></em>
+            </div>
+
+            <div class="cat_bd <if condition='$show_nav eq 0'>none</if>">
+                <volist name="nav_data" id="vo_nav_data" key="k">
+                <div class="cat <if condition='$k eq 1'>item1</if>">
+                    <h3><a href="__MODULE__/search/cat_search/catid/{$vo_nav_data['id']}">{$vo_nav_data['cate_name']}</a> <b></b></h3>
+                    <div class="cat_detail">
+                        <volist name="vo_nav_data['children']" id="next_nav_data" key="k1">
+                            <dl <if condition="$k1 eq 1">class="dl_1st"</if>>
+                            <dt><a href="__MODULE__/search/cat_search/catid/{$next_nav_data['id']}">{$next_nav_data['cate_name']}</a></dt>
+                            <dd>
+                                <volist name="next_nav_data['children']" id="final_nav_data">
+                                <a href="__MODULE__/search/cat_search/catid/{$final_nav_data['id']}">{$final_nav_data['cate_name']}</a>
+                                </volist>
+                            </dd>
+                        </dl>
+                        </volist>
+                    </div>
+                </div>
+                </volist>
+            </div>
+        </div>
+        <!--  商品分类部分 end-->
+
+        <div class="navitems fl">
+            <ul class="fl">
+                <li class="current"><a href="__ROOT__">首页</a></li>
+                <li><a href="">电脑频道</a></li>
+                <li><a href="">家用电器</a></li>
+                <li><a href="">品牌大全</a></li>
+                <li><a href="">团购</a></li>
+                <li><a href="">积分商城</a></li>
+                <li><a href="">夺宝奇兵</a></li>
+            </ul>
+            <div class="right_corner fl"></div>
+        </div>
+    </div>
+    <!-- 导航条部分 end -->
+</div>
+<!-- 头部 end-->
+
+<div style="clear:both;"></div>
+<script type="text/javascript">
+    $(function () {
+        $('#cart_list').on('mouseover',function () {
+            $.ajax({
+                url:'__MODULE__/Cart/getGoodsByAjax',
+                type:'get',
+                dataType:'json',
+                success:function (data) {
+                    var newdata=eval(data)
+                    var str='<table>';
+                    for(var i in newdata)
+                    {
+                        str+='<tr>';
+                        str+="<td><img width='60px' src='"+newdata[i]['mid_logo']+"'></td><td width='70%'><a href='__MODULE__/Goods/goods/id/"+newdata[i]['goods_id']+"'>"+newdata[i]['goods_name']+"</a></td><td width='15%' style='color: red'>X "+newdata[i]['goods_number']+"</td>";
+                        str+='</tr>';
+                    }
+                    str+='</table>';
+                    $('#cart_list_div').empty();
+                    $('#cart_list_div').append(str);
+                }
+            })
+        });
+        $.ajax({
+            url:'__MODULE__/Goods/getHistory',
+            type:'get',
+            dataType:'json',
+            success:function (data) {
+                var newdata=eval(data);
+                var str='';
+                for(var i in newdata)
+                {
+//                <li><a href=""><img src="__PUBLIC__/Home/images/view_list1.jpg" alt="" /></a></li>
+                    str+="<li><a href='__MODULE__/Goods/goods/id/"+newdata[i]['id']+"'><img src='"+newdata[i]['mid_logo']+"' alt='' /></a></li>";
+                }
+                $('#history_top_ul').append(str);
+            }
+        });
+        $.ajax({
+            url:'__MODULE__/Member/checkLoginByAjax',
+            type:'get',
+            dataType:'json',
+            success:function (data) {
+                var newdata=eval(data);
+                var li='';
+                if(newdata['flag']==1)
+                {
+                    li+="您好，"+newdata['name'];
+
+                }
+                else
+                {
+                    li+="您好，请<a href='javascript:;' class='top_login'>登录</a>";
+                }
+                $('#prompt1').html(li);
+            }
+        });
+        $('.top_login').live('click',function () {
+                    layer.open({
+                        type: 2,
+                        title: '登陆',
+                        shadeClose: true,
+                        shade: 0.8,
+                        area: ['370px', '425px'],
+                        content: '__MODULE__/member/minilogin', //iframe的url
+                        success:function(layero,index){
+                        },
+                        end:function(){
+                            window.location.reload();
+                        }
+                    });
+        });
+    })
+</script>

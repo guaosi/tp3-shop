@@ -1,0 +1,97 @@
+<layout name="layout" />
+<link rel="stylesheet" href="__PUBLIC__/Admin/Styles/base.css" />
+<!-- 搜索 -->
+<div class="form-div search_form_div">
+    <form action="__ACTION__" method="GET" name="search_form">
+		<p>
+			属性名称：
+	   		<input type="text" name="attr_name" size="30" value="<?php echo I('get.attr_name'); ?>" />
+		</p>
+		<p>
+			属性类型：
+			<input type="radio" value="-1" name="attr_type" <?php if(I('get.attr_type', -1) == -1) echo 'checked="checked"'; ?> /> 全部 
+			<input type="radio" value="唯一" name="attr_type" <?php if(I('get.attr_type', -1) == '唯一') echo 'checked="checked"'; ?> /> 唯一 
+			<input type="radio" value="可选" name="attr_type" <?php if(I('get.attr_type', -1) == '可选') echo 'checked="checked"'; ?> /> 可选 
+		</p>
+		<p>
+			所属类型：
+			{:bulidSelect('type','type_id','id','type_name',I('get.type_id'))}
+		</p>
+		<p><input type="submit" value=" 搜索 " class="button" /></p>
+    </form>
+</div>
+<!-- 列表 -->
+<div class="list-div" id="listDiv">
+	<table cellpadding="3" cellspacing="1">
+    	<tr>
+            <th >属性名称</th>
+            <th >属性类型</th>
+            <th >属性值</th>
+            <th >所属类型</th>
+			<th width="60">操作</th>
+        </tr>
+		<volist name="data" id="vo_data">
+			<tr class="tron">
+				<td align="center">{$vo_data['attr_name']}</td>
+				<td align="center">{$vo_data['attr_type']}</td>
+				<td align="center">{$vo_data['attr_option_values']}</td>
+				<td align="center">{$vo_data['type_name']}</td>
+				<td align="center"><a href="__CONTROLLER__/edit/id/{$vo_data['id']}/type_id/{:I('get.type_id')}">修改</a> | <a href="#" class="dela" data-id="{$vo_data['id']}">删除</a></td>
+			</tr>
+	        </tr>
+		</volist>
+		<!-- 分页开始 -->
+		<table id="page-table" cellspacing="0">
+			<tr>
+				<td width="80%">&nbsp;</td>
+				<td align="center" nowrap="true">
+					<div class="pagin">
+						<div class="pagination ue-clear">
+							<div class="pagin-list">
+								{$page}
+							</div>
+							<div class="pxofy">共 {$count} 条记录</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<!-- 分页结束 -->
+	</table>
+</div>
+<script type="text/javascript" src="__PUBLIC__/umeditor/third-party/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.tron').mouseover(function () {
+            $(this).find('td').css('backgroundColor','#DEE7F5');
+        });
+        $('.tron').mouseout(function () {
+            $(this).find('td').css('backgroundColor','#FFF');
+        });
+        $('.dela').on('click',function () {
+            if(confirm('确定要删除吗？'))
+            {
+                var data_id=$(this).attr('data-id');
+                $.ajax({
+                    url:'__CONTROLLER__/del/id/'+data_id,
+                    type:'get',
+                    dataType:'json',
+                    success:function (data) {
+                        var newdata=eval(data);
+                        if(data['flag']==1)
+                        {
+                            alert('删除成功');
+                            location.reload();
+                        }
+                        else
+                        {
+                            alert('删除失败');
+                        }
+                    }
+                });
+            }
+
+        });
+    });
+
+</script>

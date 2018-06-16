@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>{$page_name}</title>
+	<meta name="keywords" content="{$page_keywords}" />
+	<meta name="description" content="{$page_description}" />
+<link rel="stylesheet" href="__PUBLIC__/Home/style/login.css" type="text/css">
+<link rel="stylesheet" href="__PUBLIC__/Home/style/base.css" type="text/css">
+<link rel="stylesheet" href="__PUBLIC__/Home/style/global.css" type="text/css">
+<link rel="stylesheet" href="__PUBLIC__/Home/style/header.css" type="text/css">
+<link rel="stylesheet" href="__PUBLIC__/Home/style/footer.css" type="text/css">
+<style>
+	.login_hd{width: 350px; height: 33px;  background: url("__PUBLIC__/Home/images/tit_regist.jpg") 0 -34px repeat-x; overflow: hidden;}
+	.login_bd{width: 338px; overflow: auto; padding: 30px 0 30px 30px; border: 1px solid #D1D1D1; border-top: 0;}
+	.login_form .txt{width: 200px; height: 20px; padding: 5px; border: 1px solid #ccc;}
+	.login_btn{width: 150px; height: 34px; border: 0; background: url("__PUBLIC__/Home/images/login_miniimg.png") 0 0 no-repeat; cursor: pointer;}
+	.login_form{width: 337px; color: #666; border-right: 1px solid #eee;}
+	.login{width: 350px;}
+
+</style>
+</head>
+<body>
+<!-- 页面头部 end -->
+	<!-- 登录主体部分start -->
+	<div class="login">
+		<div class="login_bd">
+			<div class="login_form fl">
+				<form id="mini_login">
+					<ul>
+						<li>
+							<label for="">用户名：</label>
+							<input type="text" class="txt" name="username" />
+						</li>
+						<li>
+							<label for="">密码：</label>
+							<input type="password" class="txt" name="password" />
+							<a href="">忘记密码?</a>
+						</li>
+						<li class="checkcode">
+							<label for="">验证码：</label>
+							<input type="text"  name="captcha" /><br><br>
+							<label for="">　　　　</label>
+							<img style="cursor:pointer" src="__MODULE__/Member/checkcode" onclick="this.src='__CONTROLLER__/checkcode#'+Math.random()"/>
+							<span>看不清？<a href="">换一张</a></span>
+						</li>
+						<li>
+							<label for="">&nbsp;</label>
+							<input type="button" value="" class="login_btn" />
+						</li>
+					</ul>
+				</form>
+
+				<div class="coagent mt15">
+					<dl>
+						<dt>使用合作网站登录商城：</dt>
+						<dd class="qq"><a href=""><span></span>QQ</a></dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</div>
+<script src="http://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
+<script src="__PUBLIC__/layer/layer.js"></script>
+<script type="text/javascript">
+	$(function () {
+        $('.login_btn').on('click',function () {
+            var form=$('#mini_login');
+            var sendData=form.serialize();
+            $.ajax({
+                url:'__MODULE__/member/minilogin',
+                type:'post',
+                data:sendData,
+                dataType:'json',
+                success:function (data) {
+                    var newdata=eval(data);
+                    if(newdata['status']==0)
+                    {
+                            layer.msg(newdata['info'], {icon: 2});
+                    }
+                    else
+                    {
+                        layer.msg(newdata['info'], {icon: 1,end:function () {
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                        }});
+                    }
+                }
+            });
+        })
+    });
+
+</script>
+</body>

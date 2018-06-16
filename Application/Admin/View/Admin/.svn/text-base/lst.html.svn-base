@@ -1,0 +1,82 @@
+<layout name="layout" />
+<link rel="stylesheet" href="__PUBLIC__/Admin/Styles/base.css" />
+<!-- 搜索 -->
+<div class="form-div search_form_div">
+    <form action="__ACTION__" method="GET" name="search_form">
+		<p>
+			用户名：
+	   		<input type="text" name="username" size="30" value="<?php echo I('get.username'); ?>" />
+		</p>
+		<p><input type="submit" value=" 搜索 " class="button" /></p>
+    </form>
+</div>
+<!-- 列表 -->
+<div class="list-div" id="listDiv">
+	<table cellpadding="3" cellspacing="1">
+		<tr>
+			<th width="120">管理员名称</th>
+			<th >角色列表</th>
+			<th width="120">操作</th>
+		</tr>
+		<volist name="data" id="vo_data">
+			<tr class="tron">
+				<td align="center">{$vo_data['username']}</td>
+				<td align="center"><if condition="$vo_data['id'] eq 1">超级管理员<else />{$vo_data['role_name']}</if></td>
+				<td align="center"><a href="__CONTROLLER__/edit/id/{$vo_data['id']}">修改</a><if condition="$vo_data['id'] neq 1"> | <a href="#" class="dela" data-id="{$vo_data['id']}">删除</a></if></td>
+			</tr>
+		</volist>
+	</table>
+	<!-- 分页开始 -->
+	<table id="page-table" cellspacing="0">
+		<tr>
+			<td width="80%">&nbsp;</td>
+			<td align="center" nowrap="true">
+				<div class="pagin">
+					<div class="pagination ue-clear">
+						<div class="pagin-list">
+							{$page}
+						</div>
+						<div class="pxofy">共 {$count} 条记录</div>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<!-- 分页结束 -->
+</div>
+<script type="text/javascript" src="__PUBLIC__/umeditor/third-party/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.tron').mouseover(function () {
+            $(this).find('td').css('backgroundColor','#DEE7F5');
+        });
+        $('.tron').mouseout(function () {
+            $(this).find('td').css('backgroundColor','#FFF');
+        });
+        $('.dela').on('click',function () {
+            if(confirm('确定要删除吗？'))
+            {
+                var data_id=$(this).attr('data-id');
+                $.ajax({
+                    url:'__CONTROLLER__/del/id/'+data_id,
+                    type:'get',
+                    dataType:'json',
+                    success:function (data) {
+                        var newdata=eval(data);
+                        if(data['flag']==1)
+                        {
+                            alert('删除成功');
+                            location.reload();
+                        }
+                        else
+                        {
+                            alert('删除失败');
+                        }
+                    }
+                });
+            }
+
+        });
+    });
+
+</script>

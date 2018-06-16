@@ -1,0 +1,42 @@
+<layout name="layout" />
+<link rel="stylesheet" href="__PUBLIC__/Admin/Styles/base.css" />
+<!-- 列表 -->
+<div class="list-div" id="listDiv">
+	<form action="__SELF__" method="post">
+	<table cellpadding="3" cellspacing="1">
+    	<tr>
+			<volist name="attr_type" id="vo_attr_type">
+            <th>{$vo_attr_type}</th>
+			</volist>
+            <th width="200">库存量</th>
+        </tr>
+		    <if condition="$attr_type">
+		    <?php for($i=0;$i<count($attr_name);$i++):?>
+			<tr class="tron">
+                <?php for($k=0;$k<count($attr_name[$i]);$k++):?>
+				<td align="center">
+					<span>{$attr_name[$i][$k]}</span>
+					<input type="hidden" name="attr_id[]" value="{$attr_value[$i][$k]}">
+				</td>
+				<?php endfor;?>
+				<td align="center"><input type="text" name="goods_number[]" value="{$goods_number[$i]['goods_number']}"></td>
+	        </tr>
+            <?php endfor;?>
+			<else />
+				<td align="center"><input type="text" name="goods_number[]" value="{$goods_number[0]['goods_number']}"></td>
+			</if>
+		<tr><td colspan="{:count($attr_type)+2}" align="center"><input type="submit" value="提交"></td></tr>
+	</table><input type="hidden" name="goods_id" value="{:I('get.id')}"></form>
+</div>
+<script language="JavaScript" src="__PUBLIC__/Admin/Js/jquery.js"></script>
+<script type="text/javascript">
+	$(function () {
+        $('.tron').mouseover(function () {
+            $(this).find('td').css('backgroundColor','#DEE7F5');
+        });
+        $('.tron').mouseout(function () {
+            $(this).find('td').css('backgroundColor','#FFF');
+        });
+    });
+
+</script>

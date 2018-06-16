@@ -1,0 +1,14 @@
+后台开启
+/usr/local/coreseek/bin/searchd -c /usr/local/coreseek/etc/sphinx.conf
+关闭
+/usr/local/coreseek/bin/searchd -c /usr/local/coreseek/etc/sphinx.conf --stop
+初次增加索引
+/usr/local/coreseek/bin/indexer -c /usr/local/coreseek/etc/sphinx.conf goods
+后续增加索引
+/usr/local/coreseek/bin/indexer -c  /usr/local/coreseek/etc/sphinx.conf   goods_del  --rotate
+/usr/local/coreseek/bin/indexer -c  /usr/local/coreseek/etc/sphinx.conf --merge goods goods_del  --merge-dst-range is_updated 0 0 --rotate
+/usr/local/coreseek/bin/indexer -c  /usr/local/coreseek/etc/sphinx.conf   goods_zl  --rotate
+/usr/local/coreseek/bin/indexer -c  /usr/local/coreseek/etc/sphinx.conf --merge goods goods_zl --merge-dst-range is_updated 0 0 --rotate
+
+/usr/local/coreseek/update.sh
+

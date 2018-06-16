@@ -1,0 +1,75 @@
+<layout name="layout" />
+<div class="main-div">
+    <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data">
+        <table cellspacing="1" cellpadding="3" width="100%">
+            <tr>
+                <td class="label">角色名：</td>
+                <td>
+                    <input  type="text" name="role_name" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">权限列表：</td>
+                <td>
+                    <volist name="privilege_tree" id="vo_privilege_tree">
+                    {:str_repeat('-',$vo_privilege_tree['level']*8)}
+                    <input level-id={$vo_privilege_tree['level']} type="checkbox" name="pri_id[]" value="{$vo_privilege_tree['id']}">{$vo_privilege_tree['pri_name']}<br>
+                    </volist>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 " />
+                    <input type="reset" class="button" value=" 重置 " />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/umeditor/third-party/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $(':checkbox').on('click',function () {
+            var tmp_level_id=level_id=$(this).attr('level-id');
+            //这里是勾选
+            if($(this).prop('checked'))
+            {
+//                思路:从本个节点的后面所有开始寻找，只要找到level_id比自己大的，就说明是自己的子元素，就都勾选上
+//                  如果突然level_id比自己小，则证明到了其他权限，此时直接返回
+             $(this).nextAll(':checkbox').each(function (k,v) {
+                 if($(v).attr('level-id')>level_id)
+                 {
+                     $(v).prop('checked','checked');
+                 }
+                 else
+                 {
+                     return false;
+                 }
+             });
+//             思路:从本个节点的前面所有开始寻找,each是从最靠近自己的开始，则过一个上级元素，就减去一级，就不会碰到同级，直至结束
+                $(this).prevAll(':checkbox').each(function (k,v) {
+                    if($(v).attr('level-id')<tmp_level_id)
+                    {
+                        $(v).prop('checked','checked');
+                        tmp_level_id--;
+                    }
+                });
+            }
+            //这里是取消勾选   取消子元素即可
+            else
+            {
+                $(this).nextAll(':checkbox').each(function (k,v) {
+                    if($(v).attr('level-id')>level_id)
+                    {
+                        $(v).removeProp('checked');
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                });
+            }
+        })
+    });
+
+</script>

@@ -1,0 +1,298 @@
+<layout name="layout" />
+<script language="JavaScript" src="__PUBLIC__/Admin/Js/jquery.js"></script>
+    <link href="__PUBLIC__/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="__PUBLIC__/umeditor/third-party/template.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/umeditor/umeditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/umeditor/umeditor.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/umeditor/lang/zh-cn/zh-cn.js"></script>
+<style type="text/css">
+    #cat_list{
+        margin:0;}
+    #cat_list li{
+        list-style-type: none;
+        margin: 5px;
+    }
+    #attr_list{
+        margin:0;}
+    #attr_list li{
+        list-style-type: none;
+        margin: 5px;
+    }
+</style>
+<div class="tab-div">
+    <div id="tabbar-div">
+        <p>
+            <span class="tab-front">通用信息</span>
+            <span class="tab-back">商品描述</span>
+            <span class="tab-back">会员价格</span>
+            <span class="tab-back">商品属性</span>
+            <span class="tab-back">商品相册</span>
+        </p>
+    </div>
+    <div id="tabbody-div">
+        <form enctype="multipart/form-data" action="__SELF__" method="post">
+            <!--通用信息-->
+            <table width="90%" align="center" class="tab-table">
+                <tr>
+                    <td class="label">商品名称：</td>
+                    <td><input type="text" name="goods_name" size="60" />
+                        <span class="require-field">*</span></td>
+                </tr>
+                <tr>
+                    <td class="label">所属分类：</td>
+                    <td>
+                        <select name="cat_id">
+                            <option value="">--请选择--</option>
+                            <volist name="category" id="vo_category">
+                                <option value="{$vo_category['id']}">{:str_repeat('-',$vo_category['level']*8)}{$vo_category['cate_name']}</option>
+                            </volist>>
+                        </select><span class="require-field">*</span></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">扩展分类：<input id="btn_add_cat" type="button" value="添加扩展分类"></td>
+                    <td>
+                        <ul id="cat_list">
+                            <li>
+                        <select name="ext_cat_id[]">
+                            <option value="">--请选择--</option>
+                            <volist name="category" id="vo_category">
+                                <option value="{$vo_category['id']}">{:str_repeat('-',$vo_category['level']*8)}{$vo_category['cate_name']}</option>
+                            </volist>
+                        </select>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">所在品牌：</td>
+                    <td>
+                        {:bulidSelect('brand','brand_id','id','brand_name',0)}
+                    </td>
+                </tr>
+                <tr>
+                <tr>
+                    <td class="label">市场售价：</td>
+                    <td>
+                        <input type="text" name="market_price"  size="20" />
+                        <span class="require-field">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">本店售价：</td>
+                    <td>
+                        <input type="text" name="shop_price"  size="20"/>
+                        <span class="require-field">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">LOGO：</td>
+                    <td><input type="file" name="logo" size="60" /></td>
+                </tr>
+                <tr>
+                    <td class="label">是否上架：</td>
+                    <td>
+                        <input type="radio" name="is_on_sale" value="是" checked="checked" /> 是
+                        <input type="radio" name="is_on_sale" value="否" /> 否
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">促销价格：</td>
+                    <td>
+                        ￥<input type="text" name="promote_price" size="8">　
+                        促销开始时间:<input type="text" name="promote_start" id="promote_start">　
+                        促销结束时间:<input type="text" name="promote_end" id="promote_end">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">是否热卖：</td>
+                    <td>
+                        <input type="radio" name="is_hot" value="是"/> 是
+                        <input type="radio" name="is_hot" value="否"  checked="checked" /> 否
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">是否推荐：</td>
+                    <td>
+                        <input type="radio" name="is_ret" value="是"/> 是
+                        <input type="radio" name="is_ret" value="否"  checked="checked" /> 否
+                    </td>
+                </tr>               <tr>
+                <td class="label">是否新品：</td>
+                <td>
+                    <input type="radio" name="is_new" value="是" /> 是
+                    <input type="radio" name="is_new" value="否" checked="checked" /> 否
+                </td>
+                <tr>
+                    <td class="label">是否推荐到楼层：</td>
+                    <td>
+                        <input type="radio" name="is_floor" value="是" /> 是
+                        <input type="radio" name="is_floor" value="否" checked="checked" /> 否
+                    </td>
+                </tr>
+                <tr>
+                <td class="label">权　　重：</td>
+                <td>
+                    <input type="text" name="sort_num" size="8" value="100"/>
+                </td>
+            </tr>
+            </tr>
+
+            </table>
+            <!--商品描述-->
+            <table width="90%" align="center" style="display: none" class="tab-table">
+                <tr>
+                    <td align="center">
+                        <textarea id="myEditor" name="goods_desc"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <!--会员价格-->
+            <table width="90%" align="center" style="display: none" class="tab-table">
+                <tr>
+                    <td align="center">
+                        <volist name="memberlevel" id="vo_memberlevel">
+                            {$vo_memberlevel['level_name']}:￥<input type="text" name="memberlevel[{$vo_memberlevel['id']}]"  size="8"/><br>
+                        </volist>
+                    </td>
+                </tr>
+            </table>
+            <!--商品属性-->
+            <table width="90%" align="center" style="display: none" class="tab-table">
+                <tr>
+                    <td class="label">所属类型：</td>
+                    <td>
+                        {:bulidSelect('type','type_id','id','type_name',0)}
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                    <ul id="attr_list">
+
+                    </ul>
+                    </td>
+
+                </tr>
+            </table>
+            <!--商品相册-->
+            <table width="90%" align="center" style="display: none" class="tab-table">
+                <tr>
+                    <td>
+                        <input id="btn_add_pic" type="button" value="添加一张">
+                    <hr>
+                        <ul id="btn_pic_list">
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="button-div">
+                <input type="submit" value=" 确定 " class="button"/>
+                <input type="reset" value=" 重置 " class="button" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<link href="__PUBLIC__/datetimepicker/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/datetimepicker/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/datetimepicker/datepicker-zh_cn.js"></script>
+<link rel="stylesheet" media="all" type="text/css" href="__PUBLIC__/datetimepicker/time/jquery-ui-timepicker-addon.min.css" />
+<script type="text/javascript" src="__PUBLIC__/datetimepicker/time/jquery-ui-timepicker-addon.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/datetimepicker/time/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>
+<script type="text/javascript">
+    //实例化编辑器
+    var um = UM.getEditor('myEditor');
+    um.setHeight(400);
+    um.setWidth(1000);
+    $(function () {
+        //切换页面
+      $('#tabbar-div p span').on('click',function () {
+          $('.tab-front').removeClass('tab-front').addClass('tab-back');
+          $(this).removeClass('tab-back').addClass('tab-front');
+          var i=$(this).index();
+          $('.tab-table').hide();
+          $('.tab-table').eq(i).show();
+      });
+      //增加相册的一个照片
+      $('#btn_add_pic').on('click',function () {
+          var li="<li><input type='file' name='pic[]'></li>";
+          $('#btn_pic_list').append(li);
+      });
+     //增加扩展分类
+      $('#btn_add_cat').on('click',function () {
+          var cat=$('#cat_list li').eq(0).clone();
+         $('#cat_list').append(cat);
+      });
+      //商品属性获取的AJAX
+        $("select[name='type_id']").on('change',function () {
+            $('#attr_list').empty();
+            var type_id=$(this).val();
+            $.ajax({
+                url:'__CONTROLLER__/getAttrByAjax/type_id/'+type_id,
+                type:'get',
+                dataType:'json',
+                success:function (data) {
+                    var newdata=eval(data);
+                    var str='';
+                    for(var i in newdata)
+                    {
+                    if(newdata[i]['attr_type']=='可选')
+                    {
+                          str+="<li><label><a href='#' class='add_attr'>[+]</a></label>"+newdata[i]['attr_name']+"：<select name='attr_value["+newdata[i]['id']+ "][]'><option value=''>--请选择--</option>";
+                          var options=newdata[i]['attr_option_values'].split(',');
+                          for(var j in options)
+                          {
+                              str+="<option value='"+options[j]+"'>"+options[j]+"</option>";
+                          }
+                          str+="</select></li>";
+                    }
+                    else{
+                        str+="<li>"+newdata[i]['attr_name']+"：<input name='attr_value["+newdata[i]['id']+"][]' ></li>";
+                    }
+                    }
+                    $('#attr_list').append(str);
+                }
+            });
+        });
+
+        //克隆里面是不能用jq的，里面只是字符串
+        $('.add_attr').live('click',function () {
+            var old_attr=$(this).parent().parent();
+            var new_attr=old_attr.clone();
+            new_attr.find('a').remove().end().find('label').prepend("<a class='del_attr'>[-]</a>");
+            old_attr.after(new_attr);
+        });
+        $('.del_attr').live('click',function () {
+            $(this).parent().parent().remove();
+        });
+       $.timepicker.setDefaults($.timepicker.regional['zh-CN']);
+        $("#promote_start").datetimepicker({ dateFormat: "yy-mm-dd" });
+        $("#promote_end").datetimepicker({ dateFormat: "yy-mm-dd" });
+    });
+    </script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

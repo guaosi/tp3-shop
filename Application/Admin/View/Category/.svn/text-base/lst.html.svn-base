@@ -1,0 +1,63 @@
+<layout name="layout" />
+<link rel="stylesheet" href="__PUBLIC__/Admin/Styles/base.css" />
+<div class="form-div">
+<!-- 商品列表 -->
+<form method="post" action="" name="listForm" onsubmit="">
+    <div class="list-div" id="listDiv">
+        <table cellpadding="3" cellspacing="1" >
+            <tr>
+                <th>分类名称</th>
+                <th>操作</th>
+            </tr>
+
+             <volist name="data" id="vo_data">
+            <tr class="tron">
+                <td>{:str_repeat('-',$vo_data['level']*8)}{$vo_data['cate_name']}</td>
+                <td align="center"><a href="__CONTROLLER__/edit/id/{$vo_data['id']}">修改</a> | <a href="#" class="dela" data-id="{$vo_data['id']}">删除</a></td>
+            </tr>
+            </volist>
+
+        </table>
+
+    </div>
+</form>
+<script type="text/javascript" src="__PUBLIC__/umeditor/third-party/jquery.min.js"></script>
+
+<script type="text/javascript">
+    function radiosub() {
+        document.getElementById("myform").submit();
+    }
+    $(function () {
+        $('.tron').mouseover(function () {
+            $(this).find('td').css('backgroundColor','#DEE7F5');
+        });
+        $('.tron').mouseout(function () {
+            $(this).find('td').css('backgroundColor','#FFF');
+        });
+        $('.dela').on('click',function () {
+            if(confirm('确定要删除吗？'))
+            {
+                var data_id=$(this).attr('data-id');
+                $.ajax({
+                    url:'__CONTROLLER__/del/id/'+data_id,
+                    type:'get',
+                    dataType:'json',
+                    success:function (data) {
+                        var newdata=eval(data);
+                        if(data['flag']==1)
+                        {
+                            alert('删除成功');
+                            location.reload();
+                        }
+                        else
+                        {
+                            alert('删除失败');
+                        }
+                    }
+                });
+            }
+
+        });
+
+    })
+</script>

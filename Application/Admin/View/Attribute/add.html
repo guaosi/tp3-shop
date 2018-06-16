@@ -1,0 +1,49 @@
+<layout name="layout" />
+<div class="main-div">
+    <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data">
+        <table cellspacing="1" cellpadding="3" width="100%">
+            <tr>
+                <td class="label">属性名称：</td>
+                <td>
+                    <input  type="text" name="attr_name" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">属性类型：</td>
+                <td>
+                	<input class='unique_on' type="radio" name="attr_type" value="唯一"  checked="checked"/>唯一
+                	<input class='check_on' type="radio" name="attr_type" value="可选"  />可选
+                </td>
+            </tr>
+            <tr class="attr_value" style="display: none">
+                <td class="label">属性值：</td>
+                <td>
+                    <input type="text" name="attr_option_values"><span class="require-field">请用逗号隔开</span></td>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">所属类型：</td>
+                <td>
+                    {:bulidSelect('type','type_id','id','type_name',I('get.type_id'))}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 " />
+                    <input type="reset" class="button" value=" 重置 " />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/umeditor/third-party/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.unique_on').on('click',function () {
+            $('.attr_value').hide();
+        });
+        $('.check_on').on('click',function () {
+            $('.attr_value').show();
+        })
+    })
+</script>

@@ -1,0 +1,98 @@
+10
+
+dir
+2
+svn://118.89.20.47:3690/shoptp3.guaosi.com.cn/Application/Admin/View
+svn://118.89.20.47:3690
+
+
+
+2017-12-15T07:51:33.902232Z
+1
+root
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+05e21276-f5ee-45a1-9439-117ec18ac556
+
+MemberLevel
+dir
+
+layout.html
+file
+
+
+
+
+2017-12-15T08:04:15.000000Z
+b861f17a60dcf5d57f57ca0e186a72a6
+2017-12-15T07:51:33.902232Z
+1
+root
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+878
+
+Role
+dir
+
+Type
+dir
+
+Attribute
+dir
+
+Brand
+dir
+
+Privilege
+dir
+
+Index
+dir
+
+Admin
+dir
+
+Login
+dir
+
+Goods
+dir
+
+Category
+dir
+
+Empty
+dir
+

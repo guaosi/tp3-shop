@@ -1,0 +1,429 @@
+<layout name="layout" />
+<style type="text/css">
+    #btn_pic_list li{
+        margin: 10px;
+        list-style-type: none;
+    }
+    #old_pic_list li{
+        float: left;
+        width: 150px;
+        height:150;
+        margin:5px;
+        list-style-type: none;
+    }
+    #cat_list{
+        margin:0;}
+    #cat_list li{
+        list-style-type: none;
+        margin: 5px;
+    }
+    #attr_list{
+        margin:0;}
+    #attr_list li{
+        list-style-type: none;
+        margin: 5px;
+    }
+</style>
+    <link href="__PUBLIC__/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+<script language="JavaScript" src="__PUBLIC__/Admin/Js/jquery.js"></script>
+<link href="__PUBLIC__/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="__PUBLIC__/umeditor/third-party/template.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/umeditor/umeditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/umeditor/umeditor.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/umeditor/lang/zh-cn/zh-cn.js"></script>
+<div class="tab-div">
+    <div id="tabbar-div">
+        <p>
+            <span class="tab-front">通用信息</span>
+            <span class="tab-back">商品描述</span>
+            <span class="tab-back">会员价格</span>
+            <span class="tab-back">商品属性</span>
+            <span class="tab-back">商品相册</span>
+        </p>
+    </div>
+    <div id="tabbody-div">
+        <form enctype="multipart/form-data" action="__SELF__" method="post">
+            <input type="hidden" name="id" value="{$data['id']}">
+            <!--通用信息-->
+            <table width="90%" align="center" class="tab-table">
+                <tr>
+                    <td class="label">商品名称：</td>
+                    <td><input type="text" name="goods_name" size="60" value="{$data['goods_name']}"/>
+                        <span class="require-field">*</span></td>
+                </tr>
+                <tr>
+                    <td class="label">所属分类：</td>
+                    <td>
+                        <select name="cat_id">
+                            <option value="">--请选择--</option>
+                            <volist name="category" id="vo_category">
+                                <option value="{$vo_category['id']}" <if condition="$vo_category['id'] eq $data['cat_id']">selected='selected'</if>>{:str_repeat('-',$vo_category['level']*8)}{$vo_category['cate_name']}</option>
+                            </volist>
+                        </select><span class="require-field">*</span></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">扩展分类：<input id="btn_add_cat" type="button" value="添加扩展分类"></td>
+                    <td>
+                        <ul id="cat_list">
+                            <?php if($ext_category):?>
+                            <volist name="ext_category" id="vo_ext_category">
+                            <li>
+                                <select name="ext_cat_id[]">
+                                    <option value="">--请选择--</option>
+                                    <volist name="category" id="vo_category">
+                                        <option value="{$vo_category['id']}" <if condition="in_array($vo_category['id'],$vo_ext_category)">selected='selected' class='removeSelect'</if>>{:str_repeat('-',$vo_category['level']*8)}{$vo_category['cate_name']}</option>
+                                    </volist>
+                                </select>
+                            </li>
+                            </volist>
+                            <?php else:?>
+                                <li>
+                                    <select name="ext_cat_id[]">
+                                        <option value="">--请选择--</option>
+                                        <volist name="category" id="vo_category">
+                                            <option value="{$vo_category['id']}">{:str_repeat('-',$vo_category['level']*8)}{$vo_category['cate_name']}</option>
+                                        </volist>
+                                    </select>
+                                </li>
+                            <?php endif;?>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">所在品牌：</td>
+                    <td>
+                        <?=$data['brand_id']?>
+                        {:bulidSelect('brand','brand_id','id','brand_name',$data['brand_id'])}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label">市场售价：</td>
+                    <td>
+                        <input type="text" name="market_price"  size="20" value="{$data['market_price']}"/>
+                        <span class="require-field">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">本店售价：</td>
+                    <td>
+                        <input type="text" name="shop_price"  size="20" value="{$data['shop_price']}"/>
+                        <span class="require-field">*</span>
+                    </td>
+                </tr>
+                <if condition="$data['logo'] neq ''">
+                    <tr>
+                        <td class="label">LOGO展示：</td>
+                        <td>{:showImg($data['mid_logo'])}</td>
+                </if>
+                <tr>
+                    <td class="label">LOGO：</td>
+                    <td><input type="file" name="logo" size="60" /></td>
+
+                </tr>
+
+                <tr>
+                    <td class="label">是否上架：</td>
+                    <td>
+                        <input type="radio" name="is_on_sale" value="是" <if condition="$data['is_on_sale'] eq '是'">checked="checked"</if> /> 是
+                        <input type="radio" name="is_on_sale" value="否" <if condition="$data['is_on_sale'] eq '否'">checked="checked"</if> /> 否
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">促销价格：</td>
+                    <td>
+                        ￥<input type="text" name="promote_price" size="8" value="{$data['promote_price']}">　
+                        促销开始时间:<input type="text" name="promote_start" id="promote_start" value="{$data['promote_start']|date='Y-m-d H:i:s',###}">　
+                        促销结束时间:<input type="text" name="promote_end" id="promote_end" value="{$data['promote_end']|date='Y-m-d H:i:s',###}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">是否热卖：</td>
+                    <td>
+                        <input type="radio" name="is_hot" value="是" <if condition="$data['is_hot'] eq '是'">checked="checked"</if> /> 是
+                        <input type="radio" name="is_hot" value="否" <if condition="$data['is_hot'] eq '否'">checked="checked"</if> /> 否
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">是否推荐：</td>
+                    <td>
+                        <input type="radio" name="is_ret" value="是" <if condition="$data['is_ret'] eq '是'">checked="checked"</if> /> 是
+                        <input type="radio" name="is_ret" value="否" <if condition="$data['is_ret'] eq '否'">checked="checked"</if> /> 否
+                    </td>
+                </tr>
+                <tr>
+                <td class="label">是否新品：</td>
+                <td>
+                    <input type="radio" name="is_new" value="是" <if condition="$data['is_new'] eq '是'">checked="checked"</if> /> 是
+                    <input type="radio" name="is_new" value="否" <if condition="$data['is_new'] eq '否'">checked="checked"</if> /> 否
+                </td>
+                </tr>
+                <tr>
+                    <td class="label">是否推荐到楼层：</td>
+                    <td>
+                        <input type="radio" name="is_floor"  value="是" <if condition="$data['is_floor'] eq '是'">checked="checked"</if> /> 是
+                        <input type="radio" name="is_floor"  value="否" <if condition="$data['is_floor'] eq '否'">checked="checked"</if> /> 否
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">权　　重：</td>
+                    <td>
+                        <input type="text" name="sort_num" size="8" value="{$data['sort_num']}"/>
+                    </td>
+                </tr>
+            </table>
+            <!--商品描述-->
+            <table width="90%" align="center" style="display: none" class="tab-table">
+                <tr>
+                    <td align="center">
+                        <textarea id="myEditor" name="goods_desc">{$data['goods_desc']}</textarea>
+                    </td>
+                </tr>
+            </table>
+            <!--会员价格-->
+            <table width="90%" style="display: none" class="tab-table" align="center" >
+                <tr>
+                    <td align="center">
+                        <volist name="price" id="vo_price">
+                            {$vo_price['level_name']}:￥<input type="text" name="memberlevel[{$vo_price['level_id']}]" value="{$vo_price['price']}" size="8"/><br>
+                        </volist>
+                    </td>
+                </tr>
+            </table>
+            <!--商品属性-->
+            <table width="90%" style="display: none" class="tab-table" align="center" >
+                <tr>
+                    <td class="label">所属类型：</td>
+                    <td>
+                        {:bulidSelect('type','type_id','id','type_name',$data['type_id'])}
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <ul id="attr_list">
+                            <?php $attr_arr=array();?>
+                            <volist name="goods_attr" id="vo_goods_attr">
+                                <!--将所有获取的数据进行输出-->
+                                <if condition="$vo_goods_attr['attr_type'] eq '唯一'">
+                                    <!--唯一的用text，可选的用check-->
+                                    <li>
+                                        <!--通过隐藏域是否有value值来判断，这个属性是新增还是修改-->
+                                        <input type="hidden" name="goods_attr_id[]" value="{$vo_goods_attr['id']}"></li>
+                                        {$vo_goods_attr['attr_name']}：<input name="attr_value[{$vo_goods_attr['a_id']}][]" value="{$vo_goods_attr['attr_value']}">
+                                    </li>
+                                    <else />
+                                    <!--这里通过2个标志来判断这个属性是否已经遍历过了，是否是第一个，是第一个的话，用+，不是用--->
+                                    <?php $attr_flag=1;?>
+                                    <?php if(!(in_array($vo_goods_attr['attr_id'],$attr_arr))){
+                                    $attr_arr[]=$vo_goods_attr['attr_id'];
+                                    $attr_flag=2;
+                                    }?>
+
+                                    <li><input type="hidden" name="goods_attr_id[]" value="{$vo_goods_attr['id']}"><label><if condition="$attr_flag eq 2"><a href='#' class='add_attr'>[+]</a><else /><a href='#' class='del_attr_ajax' data-id="{$vo_goods_attr['id']}" goods-id="{$vo_goods_attr['goods_id']}">[-]</a></if></label>{$vo_goods_attr['attr_name']}：<select name="attr_value[{$vo_goods_attr['a_id']}][]"><option value="">--请选择--</option>
+                                        {:$option_attr=explode(',',$vo_goods_attr['attr_option_values'])}
+                                        <volist name="option_attr" id="vo_option_attr">
+                                            <option value="{$vo_option_attr}" <if condition="$vo_goods_attr['attr_value'] eq $vo_option_attr">selected='selected'</if>>{$vo_option_attr}</option>
+                                        </volist>
+                                    </select></li>
+                                </if>
+                            </volist>
+                        </ul>
+                    </td>
+
+                </tr>
+            </table>
+            <!--商品相册-->
+            <table width="90%" align="center" style="display: none" class="tab-table">
+                <tr>
+                    <td>
+                        <input id="btn_add_pic" type="button" value="添加一张">
+                        <hr>
+                        <ul id="btn_pic_list">
+                        </ul>
+                        <ul id="old_pic_list">
+                            <volist name="mid_pic" id="vo_mid_pic">
+                                <li>
+                                    <input class='btn_del_pic' type="button" data-id="{$vo_mid_pic['id']}" value="删除">
+                                    {:showImg($vo_mid_pic['mid_pic'],150)}
+                                </li>
+                            </volist>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="button-div">
+                <input type="submit" value=" 确定 " class="button"/>
+                <input type="reset" value=" 重置 " class="button" />
+            </div>
+        </form>
+    </div>
+</div>
+<link href="__PUBLIC__/datetimepicker/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/datetimepicker/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/datetimepicker/datepicker-zh_cn.js"></script>
+<link rel="stylesheet" media="all" type="text/css" href="__PUBLIC__/datetimepicker/time/jquery-ui-timepicker-addon.min.css" />
+<script type="text/javascript" src="__PUBLIC__/datetimepicker/time/jquery-ui-timepicker-addon.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/datetimepicker/time/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>
+<script type="text/javascript">
+    //实例化编辑器
+    var um = UM.getEditor('myEditor');
+    um.setHeight(400);
+    um.setWidth(1000);
+    $(function () {
+        $('#tabbar-div p span').on('click',function () {
+            $('.tab-front').removeClass('tab-front').addClass('tab-back');
+            $(this).removeClass('tab-back').addClass('tab-front');
+            var i=$(this).index();
+            $('.tab-table').hide();
+            $('.tab-table').eq(i).show();
+        });
+        $('#btn_add_pic').on('click',function () {
+            var li="<li><input type='file' name='pic[]'></li>";
+            $('#btn_pic_list').append(li);
+        });
+        $('.btn_del_pic').on('click',function () {
+
+            if(confirm('是否要删除这张图片?'))
+            {
+                var data_id=$(this).attr('data-id');
+                var _this=$(this);
+                $.ajax({
+                    url:'__CONTROLLER__/delPic/id/'+data_id,
+                    type:'get',
+                    dataType:'json',
+                    success:function (data) {
+                        var newdata=eval(data)
+                        if(newdata['flag']==1)
+                        {
+                         alert('删除成功');
+                            _this.parent().remove();
+                        }
+                        else
+                        {
+                            alert('删除失败');
+                        }
+                    }
+
+                })
+
+            }
+
+        });
+        $('#btn_add_cat').on('click',function () {
+            var cat=$('#cat_list li').eq(0).clone();
+            var newcat=cat.find('.removeSelect').removeProp('selected').end();
+            $('#cat_list').append(newcat);
+        });
+        //商品属性获取的AJAX
+        $("select[name='type_id']").on('change',function () {
+            if(confirm('切换类型，将会删除商品原有属性以及相关库存量，确定吗?'))
+            {
+                $('#attr_list').empty();
+                var type_id=$(this).val();
+                var goods_id={:I('get.id')};
+                $.ajax({
+                url:'__CONTROLLER__/changeTypeByAjax/goods_id/'+goods_id,
+                    type:'get',
+                    dataType:'json',
+                    success:function () {
+                    }
+                });
+                $.ajax({
+                    url:'__CONTROLLER__/getAttrByAjax/type_id/'+type_id,
+                    type:'get',
+                    dataType:'json',
+                    success:function (data) {
+                        var newdata=eval(data);
+                        var str='';
+                        for(var i in newdata)
+                        {
+                            if(newdata[i]['attr_type']=='可选')
+                            {
+                                str+="<li><label><a href='#' class='add_attr'>[+]</a></label>"+newdata[i]['attr_name']+"：<select name='attr_value["+newdata[i]['id']+ "][]'><option value=''>--请选择--</option>";
+                                var options=newdata[i]['attr_option_values'].split(',');
+                                for(var j in options)
+                                {
+                                    str+="<option value='"+options[j]+"'>"+options[j]+"</option>";
+                                }
+                                str+="</select></li>";
+                            }
+                            else{
+                                str+="<li>"+newdata[i]['attr_name']+"：<input name='attr_value["+newdata[i]['id']+"][]' ></li>";
+                            }
+                        }
+                        $('#attr_list').append(str);
+                    }
+                });
+            }
+
+        });
+
+        //克隆里面是不能用jq的，里面只是字符串
+        $('.add_attr').live('click',function () {
+            var old_attr=$(this).parent().parent();
+            var new_attr=old_attr.clone();
+            new_attr.find('a').remove().end().find('label').prepend("<a class='del_attr'>[-]</a>");
+            new_attr.find('input').val('').end();
+            new_attr.find('option').removeProp('selected').end();
+            old_attr.after(new_attr);
+        });
+        $('.del_attr').live('click',function () {
+            $(this).parent().parent().remove();
+        });
+        $('.del_attr_ajax').live('click',function () {
+            if(confirm('确认要删除吗?(会删除与之相关的库存量)'))
+            {
+                var _this=$(this);
+                var data_id=$(this).attr('data-id');
+                var goods_id=$(this).attr('goods-id');
+
+                $.ajax({
+                    url:'__CONTROLLER__/delAttrByAjax/goods_attr_id/'+data_id+'/goods_id/'+goods_id,
+                    type:'get',
+                    dataType:'json',
+                    success:function (data) {
+                        var newdata=eval(data);
+                        if(data['flag']==1)
+                        {
+                            alert('删除成功');
+                            _this.parent().parent().remove();
+                        }
+                        else
+                        {
+                            alert('删除失败');
+                        }
+                    }
+                });
+            }
+        });
+        $.timepicker.setDefaults($.timepicker.regional['zh-CN']);
+        $("#promote_start").datetimepicker({ dateFormat: "yy-mm-dd" });
+        $("#promote_end").datetimepicker({ dateFormat: "yy-mm-dd" });
+    })
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

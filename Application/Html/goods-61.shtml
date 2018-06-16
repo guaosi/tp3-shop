@@ -1,0 +1,1133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>商品详情</title>
+    <meta name="keywords" content="商品详情" />
+    <meta name="description" content="商品详情" />
+
+    <link rel="stylesheet" href="/Public/Home/style/base.css" type="text/css">
+    <link rel="stylesheet" href="/Public/Home/style/global.css" type="text/css">
+    <link rel="stylesheet" href="/Public/Home/style/header.css" type="text/css">
+    <link rel="stylesheet" href="/Public/Home/style/bottomnav.css" type="text/css">
+    <link rel="stylesheet" href="/Public/Home/style/footer.css" type="text/css">
+    <script type="text/javascript" src="/Public/Home/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/Public/Home/js/header.js"></script>
+</head>
+<body>
+<!-- 顶部导航 start -->
+<div class="topnav">
+    <div class="topnav_bd w1210 bc">
+        <div class="topnav_left">
+
+        </div>
+        <div class="topnav_right fr">
+            <ul>
+                <li id="checklogin"></li>
+                <li class="line">|</li>
+                <li><a href="/Home/My/order">我的订单</a></li>
+                <li class="line">|</li>
+                <li>客户服务</li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- 顶部导航 end -->
+
+<div style="clear:both;"></div>
+
+<!--<script src="http://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>-->
+<script src="/Public/layer/layer.js"></script>
+	<link rel="stylesheet" href="/Public/Home/style/goods.css" type="text/css">
+	<link rel="stylesheet" href="/Public/Home/style/common.css" type="text/css">
+	<!--引入jqzoom css -->
+	<link rel="stylesheet" href="/Public/Home/style/jqzoom.css" type="text/css">
+	<script type="text/javascript" src="/Public/Home/js/goods.js"></script>
+	<script type="text/javascript" src="/Public/Home/js/jqzoom-core.js"></script>
+	<!-- jqzoom 效果 -->
+	<script type="text/javascript">
+		$(function(){
+			$('.jqzoom').jqzoom({
+	            zoomType: 'standard',
+	            lens:true,
+	            preloadImages: false,
+	            alwaysOn:false,
+	            title:false,
+	            zoomWidth:400,
+	            zoomHeight:400
+	        });
+		})
+	</script>
+<style>
+	.reply_ul{
+       margin-top: 40px;
+	}
+	.reply_ul li{
+		margin: 5px;
+		background-color: #DAF1DA;
+		min-height: 50px;
+	}
+	.reply_ul li p{
+       margin-top: 2px;
+	}
+	.reply_ul li img{
+		float: right;
+	}
+</style>
+<script src="/Public/layer/layer.js"></script>
+<!-- 头部 start -->
+<div class="header w1210 bc mt15">
+    <!-- 头部上半部分 start 包括 logo、搜索、用户中心和购物车结算 -->
+    <div class="logo w1210">
+        <h1 class="fl"><a href="/"><img src="/Public/Home/images/logo.png" alt="京西商城"></a></h1>
+        <!-- 头部搜索 start -->
+        <div class="search fl">
+            <div class="search_form">
+                <div class="form_left fl"></div>
+                <form name="search" method="get" class="fl" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
+
+                    <input id="key" name="key" type="text" class="txt" value="请输入商品关键字" />
+                    <input onclick="location.href='/Home/search/key_search/key/'+$('#key').val()" type="button" class="btn" value="搜索" />
+                </form>
+                <div class="form_right fl"></div>
+            </div>
+
+            <div style="clear:both;"></div>
+
+            <div class="hot_search">
+                <strong>热门搜索:</strong>
+                <a href="">D-Link无线路由</a>
+                <a href="">休闲男鞋</a>
+                <a href="">TCL空调</a>
+                <a href="">耐克篮球鞋</a>
+            </div>
+        </div>
+        <!-- 头部搜索 end -->
+
+        <!-- 用户中心 start-->
+        <div class="user fl">
+            <dl>
+                <dt>
+                    <em></em>
+                    <a href="/Home/My/order">用户中心</a>
+                    <b></b>
+                </dt>
+                <dd>
+                    <div class="prompt" id="prompt1">
+
+                    </div>
+                    <div class="uclist mt10">
+                        <ul class="list1 fl">
+                            <li><a href="/Home/My/order">我的订单></a></li>
+                        </ul>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <div class="viewlist mt10">
+                        <h3>最近浏览的商品：</h3>
+                        <ul id="history_top_ul">
+
+                        </ul>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <!-- 用户中心 end-->
+
+        <!-- 购物车 start -->
+        <div class="cart fl">
+            <dl>
+                <dt>
+                    <a href="/Home/Cart/lst" id="cart_list">去购物车结算</a>
+                    <b></b>
+                </dt>
+                <dd>
+                    <div class="prompt" id="cart_list_div">
+                        <img src="/Public/Home/images/Loading.gif">
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <!-- 购物车 end -->
+    </div>
+    <!-- 头部上半部分 end -->
+
+    <div style="clear:both;"></div>
+
+    <!-- 导航条部分 start -->
+    <div class="nav w1210 bc mt10">
+        <!--  商品分类部分 start-->
+        <div class="category fl cat1"> <!-- 非首页，需要添加cat1类 -->
+            <div class="cat_hd off">  <!-- 注意，首页在此div上只需要添加cat_hd类，非首页，默认收缩分类时添加上off类，鼠标滑过时展开菜单则将off类换成on类 -->
+                <h2>全部商品分类</h2>
+                <em></em>
+            </div>
+
+            <div class="cat_bd none">
+                <div class="cat item1">
+                    <h3><a href="/Home/search/cat_search/catid/1">家用电器</a> <b></b></h3>
+                    <div class="cat_detail">
+                        <dl class="dl_1st">
+                            <dt><a href="/Home/search/cat_search/catid/16">大家电</a></dt>
+                            <dd>
+                                <a href="/Home/search/cat_search/catid/22">冰箱123</a><a href="/Home/search/cat_search/catid/26">我是车站</a><a href="/Home/search/cat_search/catid/27">再来一个</a>                            </dd>
+                        </dl><dl >
+                            <dt><a href="/Home/search/cat_search/catid/17">生活电器</a></dt>
+                            <dd>
+                                                            </dd>
+                        </dl><dl >
+                            <dt><a href="/Home/search/cat_search/catid/18">厨房电器</a></dt>
+                            <dd>
+                                                            </dd>
+                        </dl><dl >
+                            <dt><a href="/Home/search/cat_search/catid/19">个护健康</a></dt>
+                            <dd>
+                                                            </dd>
+                        </dl><dl >
+                            <dt><a href="/Home/search/cat_search/catid/20">五金家装</a></dt>
+                            <dd>
+                                                            </dd>
+                        </dl>                    </div>
+                </div><div class="cat ">
+                    <h3><a href="/Home/search/cat_search/catid/2">手机、数码、京东通信</a> <b></b></h3>
+                    <div class="cat_detail">
+                        <dl class="dl_1st">
+                            <dt><a href="/Home/search/cat_search/catid/21">iphone</a></dt>
+                            <dd>
+                                                            </dd>
+                        </dl>                    </div>
+                </div><div class="cat ">
+                    <h3><a href="/Home/search/cat_search/catid/3">电脑、办公</a> <b></b></h3>
+                    <div class="cat_detail">
+                                            </div>
+                </div><div class="cat ">
+                    <h3><a href="/Home/search/cat_search/catid/4">家居、家具、家装、厨具</a> <b></b></h3>
+                    <div class="cat_detail">
+                                            </div>
+                </div><div class="cat ">
+                    <h3><a href="/Home/search/cat_search/catid/5">男装、女装、内衣、珠宝</a> <b></b></h3>
+                    <div class="cat_detail">
+                                            </div>
+                </div><div class="cat ">
+                    <h3><a href="/Home/search/cat_search/catid/6">个护化妆</a> <b></b></h3>
+                    <div class="cat_detail">
+                                            </div>
+                </div><div class="cat ">
+                    <h3><a href="/Home/search/cat_search/catid/8">运动户外</a> <b></b></h3>
+                    <div class="cat_detail">
+                                            </div>
+                </div><div class="cat ">
+                    <h3><a href="/Home/search/cat_search/catid/9">汽车、汽车用品</a> <b></b></h3>
+                    <div class="cat_detail">
+                                            </div>
+                </div><div class="cat ">
+                    <h3><a href="/Home/search/cat_search/catid/10">母婴、玩具乐器</a> <b></b></h3>
+                    <div class="cat_detail">
+                                            </div>
+                </div><div class="cat ">
+                    <h3><a href="/Home/search/cat_search/catid/11">食品、酒类、生鲜、特产</a> <b></b></h3>
+                    <div class="cat_detail">
+                                            </div>
+                </div><div class="cat ">
+                    <h3><a href="/Home/search/cat_search/catid/12">营养保健</a> <b></b></h3>
+                    <div class="cat_detail">
+                                            </div>
+                </div><div class="cat ">
+                    <h3><a href="/Home/search/cat_search/catid/13">图书、音像、电子书</a> <b></b></h3>
+                    <div class="cat_detail">
+                                            </div>
+                </div><div class="cat ">
+                    <h3><a href="/Home/search/cat_search/catid/14">彩票、旅行、充值、票务</a> <b></b></h3>
+                    <div class="cat_detail">
+                                            </div>
+                </div>            </div>
+        </div>
+        <!--  商品分类部分 end-->
+
+        <div class="navitems fl">
+            <ul class="fl">
+                <li class="current"><a href="">首页</a></li>
+                <li><a href="">电脑频道</a></li>
+                <li><a href="">家用电器</a></li>
+                <li><a href="">品牌大全</a></li>
+                <li><a href="">团购</a></li>
+                <li><a href="">积分商城</a></li>
+                <li><a href="">夺宝奇兵</a></li>
+            </ul>
+            <div class="right_corner fl"></div>
+        </div>
+    </div>
+    <!-- 导航条部分 end -->
+</div>
+<!-- 头部 end-->
+
+<div style="clear:both;"></div>
+<script type="text/javascript">
+    $(function () {
+        $('#cart_list').on('mouseover',function () {
+            $.ajax({
+                url:'/Home/Cart/getGoodsByAjax',
+                type:'get',
+                dataType:'json',
+                success:function (data) {
+                    var newdata=eval(data)
+                    var str='<table>';
+                    for(var i in newdata)
+                    {
+                        str+='<tr>';
+                        str+="<td><img width='60px' src='"+newdata[i]['mid_logo']+"'></td><td width='70%'><a href='/Home/Goods/goods/id/"+newdata[i]['goods_id']+"'>"+newdata[i]['goods_name']+"</a></td><td width='15%' style='color: red'>X "+newdata[i]['goods_number']+"</td>";
+                        str+='</tr>';
+                    }
+                    str+='</table>';
+                    $('#cart_list_div').empty();
+                    $('#cart_list_div').append(str);
+                }
+            })
+        });
+        $.ajax({
+            url:'/Home/Goods/getHistory',
+            type:'get',
+            dataType:'json',
+            success:function (data) {
+                var newdata=eval(data);
+                var str='';
+                for(var i in newdata)
+                {
+//                <li><a href=""><img src="/Public/Home/images/view_list1.jpg" alt="" /></a></li>
+                    str+="<li><a href='/Home/Goods/goods/id/"+newdata[i]['id']+"'><img src='"+newdata[i]['mid_logo']+"' alt='' /></a></li>";
+                }
+                $('#history_top_ul').append(str);
+            }
+        });
+        $.ajax({
+            url:'/Home/Member/checkLoginByAjax',
+            type:'get',
+            dataType:'json',
+            success:function (data) {
+                var newdata=eval(data);
+                var li='';
+                if(newdata['flag']==1)
+                {
+                    li+="您好，"+newdata['name'];
+
+                }
+                else
+                {
+                    li+="您好，请<a href='javascript:;' class='top_login'>登录</a>";
+                }
+                $('#prompt1').html(li);
+            }
+        });
+        $('.top_login').live('click',function () {
+                    layer.open({
+                        type: 2,
+                        title: '登陆',
+                        shadeClose: true,
+                        shade: 0.8,
+                        area: ['370px', '425px'],
+                        content: '/Home/member/minilogin', //iframe的url
+                        success:function(layero,index){
+                        },
+                        end:function(){
+                            window.location.reload();
+                        }
+                    });
+        });
+    })
+</script>
+
+	<!-- 商品页面主体 start -->
+	<div class="main w1210 mt10 bc">
+		<!-- 面包屑导航 start -->
+		<div class="breadcrumb">
+			<h2>当前位置：
+				<a href="http://shoptp3.guaosi.com">首页</a> >
+								<a href="/Home/search/cat_search/catid/1">家用电器</a> >
+								<a href="/Home/search/cat_search/catid/16">大家电</a> >
+								OPPO			</h2>
+		</div>
+		<!-- 面包屑导航 end -->
+
+		<!-- 主体页面左侧内容 start -->
+		<div class="goods_left fl">
+			<!-- 相关分类 start -->
+			<div class="related_cat leftbar mt10">
+				<h2><strong>相关分类</strong></h2>
+				<div class="leftbar_wrap">
+					<ul>
+						<li><a href="">笔记本</a></li>
+						<li><a href="">超极本</a></li>
+						<li><a href="">平板电脑</a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- 相关分类 end -->
+
+			<!-- 相关品牌 start -->
+			<div class="related_cat	leftbar mt10">
+				<h2><strong>同类品牌</strong></h2>
+				<div class="leftbar_wrap">
+					<ul>
+						<li><a href="">D-Link</a></li>
+						<li><a href="">戴尔</a></li>
+						<li><a href="">惠普</a></li>
+						<li><a href="">苹果</a></li>
+						<li><a href="">华硕</a></li>
+						<li><a href="">宏基</a></li>
+						<li><a href="">神舟</a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- 相关品牌 end -->
+
+			<!-- 热销排行 start -->
+			<div class="hotgoods leftbar mt10">
+				<h2><strong>热销排行榜</strong></h2>
+				<div class="leftbar_wrap">
+					<ul>
+						<li></li>
+					</ul>
+				</div>
+			</div>
+			<!-- 热销排行 end -->
+
+
+			<!-- 浏览过该商品的人还浏览了  start 注：因为和list页面newgoods样式相同，故加入了该class -->
+			<div class="related_view newgoods leftbar mt10">
+				<h2><strong>浏览了该商品的用户还浏览了</strong></h2>
+				<div class="leftbar_wrap">
+					<ul>
+						<li>
+							<dl>
+								<dt><a href=""><img src="/Public/Home/images/relate_view1.jpg" alt="" /></a></dt>
+								<dd><a href="">ThinkPad E431(62771A7) 14英寸笔记本电脑 (i5-3230 4G 1TB 2G独显 蓝牙 win8)</a></dd>
+								<dd><strong>￥5199.00</strong></dd>
+							</dl>
+						</li>
+
+						<li>
+							<dl>
+								<dt><a href=""><img src="/Public/Home/images/relate_view2.jpg" alt="" /></a></dt>
+								<dd><a href="">ThinkPad X230i(2306-3V9） 12.5英寸笔记本电脑 （i3-3120M 4GB 500GB 7200转 蓝牙 摄像头 Win8）</a></dd>
+								<dd><strong>￥5199.00</strong></dd>
+							</dl>
+						</li>
+
+						<li>
+							<dl>
+								<dt><a href=""><img src="/Public/Home/images/relate_view3.jpg" alt="" /></a></dt>
+								<dd><a href="">T联想（Lenovo） Yoga13 II-Pro 13.3英寸超极本 （i5-4200U 4G 128G固态硬盘 摄像头 蓝牙 Win8）晧月银</a></dd>
+								<dd><strong>￥7999.00</strong></dd>
+							</dl>
+						</li>
+
+						<li>
+							<dl>
+								<dt><a href=""><img src="/Public/Home/images/relate_view4.jpg" alt="" /></a></dt>
+								<dd><a href="">联想（Lenovo） Y510p 15.6英寸笔记本电脑（i5-4200M 4G 1T 2G独显 摄像头 DVD刻录 Win8）黑色</a></dd>
+								<dd><strong>￥6199.00</strong></dd>
+							</dl>
+						</li>
+
+						<li class="last">
+							<dl>
+								<dt><a href=""><img src="/Public/Home/images/relate_view5.jpg" alt="" /></a></dt>
+								<dd><a href="">ThinkPad E530c(33662D0) 15.6英寸笔记本电脑 （i5-3210M 4G 500G NV610M 1G独显 摄像头 Win8）</a></dd>
+								<dd><strong>￥4399.00</strong></dd>
+							</dl>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- 浏览过该商品的人还浏览了  end -->
+
+			<!-- 最近浏览 start -->
+			<div class="viewd leftbar mt10">
+				<h2><a href="javaScript:;" id="cleanhistory">清空</a><strong>最近浏览过的商品</strong></h2>
+				<div class="leftbar_wrap">
+					<dl id="history_dl">
+					</dl>
+				</div>
+			</div>
+			<!-- 最近浏览 end -->
+
+		</div>
+		<!-- 主体页面左侧内容 end -->
+
+		<!-- 商品信息内容 start -->
+		<div class="goods_content fl mt10 ml10">
+			<!-- 商品概要信息 start -->
+			<div class="summary">
+				<h3><strong>OPPO</strong></h3>
+
+				<!-- 图片预览区域 start -->
+				<div class="preview fl">
+					<div class="midpic">
+						<a href="/Public/Upload/2017-07-15/5969cf6c6f25d.JPG" class="jqzoom" rel="gal1">   <!-- 第一幅图片的大图 class 和 rel属性不能更改 -->
+							<img src='/Public/Upload/2017-07-15/big_5969cf6c6f25d.JPG' />							            <!-- 第一幅图片的中图 -->
+						</a>
+					</div>
+
+					<!--使用说明：此处的预览图效果有三种类型的图片，大图，中图，和小图，取得图片之后，分配到模板的时候，把第一幅图片分配到 上面的midpic 中，其中大图分配到 a 标签的href属性，中图分配到 img 的src上。 下面的smallpic 则表示小图区域，格式固定，在 a 标签的 rel属性中，分别指定了中图（smallimage）和大图（largeimage），img标签则显示小图，按此格式循环生成即可，但在第一个li上，要加上cur类，同时在第一个li 的a标签中，添加类 zoomThumbActive  -->
+
+					<div class="smallpic">
+						<a href="javascript:;" id="backward" class="off"></a>
+						<a href="javascript:;" id="forward" class="on"></a>
+						<div class="smallpic_wrap">
+							<ul>
+								<li class="cur">
+									<a class="zoomThumbActive" href="javascript:void(0);" rel="{gallery: 'gal1', smallimage: '/Public/Upload/2017-07-15/big_5969cf6c6f25d.JPG',largeimage: '/Public/Upload/2017-07-15/mbig_5969cf6c6f25d.JPG'}"><img src='/Public/Upload/2017-07-15/sm_5969cf6c6f25d.JPG' /></a>
+								</li>
+															</ul>
+						</div>
+
+					</div>
+				</div>
+				<!-- 图片预览区域 end -->
+
+				<!-- 商品基本信息区域 start -->
+				<div class="goodsinfo fl ml10">
+					<ul>
+						<li><span>商品编号： </span>61</li>
+						<li class="market_price"><span>市场价：</span><em>￥5000.00</em></li>
+						<li class="shop_price"><span>本店价：</span> <strong>￥4000.00</strong> </li>
+						<li class="shop_price"><span>会员价：</span>
+							<p>
+							<table border="1" cellspacing="5" cellpadding="5" width="30%">
+															</table>
+							</p>
+						</li>
+						<li class="shop_price"><span>购买价：</span><strong id="member_price" style="font-size: 25px"></strong></li>
+						<li><span>上架时间：</span>2017-07-15 16:16:44</li>
+						<li class="star"><span>商品评分：</span> <strong></strong><a href="">(已有21人评价)</a></li> <!-- 此处的星级切换css即可 默认为5星 star4 表示4星 star3 表示3星 star2表示2星 star1表示1星 -->
+					</ul>
+					<form action="/Home/Cart/add" method="post" class='choose'>
+						<ul>
+                             							<li>
+								<dl>
+									<dt>购买数量：</dt>
+									<dd>
+										<a href="javascript:;" id="reduce_num"></a>
+										<input type="text" name="goods_number" value="1" class="amount"/>
+										<a href="javascript:;" id="add_num"></a>
+									</dd>
+								</dl>
+							</li>
+
+							<li>
+								<dl>
+									<dt>&nbsp;</dt>
+									<dd>
+										<input type="hidden" name="goods_id" value="61" />
+										<input type="submit" value="" class="add_btn" />
+									</dd>
+								</dl>
+							</li>
+
+						</ul>
+					</form>
+				</div>
+				<!-- 商品基本信息区域 end -->
+			</div>
+			<!-- 商品概要信息 end -->
+
+			<div style="clear:both;"></div>
+
+			<!-- 商品详情 start -->
+			<div class="detail">
+				<div class="detail_hd">
+					<ul>
+						<li class="first"><span>商品介绍</span></li>
+						<li class="on"><span>商品评价</span></li>
+						<li><span>售后保障</span></li>
+					</ul>
+				</div>
+				<div class="detail_bd">
+					<!-- 商品介绍 start -->
+					<div class="introduce detail_div none">
+						<div class="attr mt15">
+							<ul>
+															</ul>
+						</div>
+
+						<div class="desc mt10"></div>
+
+					</div>
+					<!-- 商品介绍 end -->
+
+					<!-- 商品评论 start -->
+					<div class="comment detail_div mt10">
+						<div class="comment_summary">
+							<div class="rate fl">
+								<strong><em class="hao"></em>%</strong> <br />
+								<span>好评度</span>
+							</div>
+							<div class="percent fl">
+								<dl>
+									<dt>好评（<span class="hao"></span>%）</dt>
+									<dd><div id="hao_width"></div></dd>
+								</dl>
+								<dl>
+									<dt>中评（<span class="zhong"></span>%）</dt>
+									<dd><div id="zhong_width"></div></dd>
+								</dl>
+								<dl>
+									<dt>差评（<span class="cha"></span>%）</dt>
+									<dd><div id="cha_width"></div></dd>
+								</dl>
+							</div>
+							<div class="buyer fl">
+								<dl>
+									<dt>买家印象：</dt>
+								</dl>
+							</div>
+						</div>
+						<div id="content_list">
+
+						</div>
+						<!-- 分页信息 start -->
+						<div class="page mt20" id="page_div">
+
+						</div>
+						<!-- 分页信息 end -->
+
+						<!--  评论表单 start-->
+						<div class="comment_form mt20">
+							<form id="comment_form">
+								<input type="hidden" name="goods_id" value="61">
+								<ul>
+									<li>
+										<label for=""> 评分：</label>
+										<input type="radio" name="star" value="5" checked="checked"/> <strong class="star star5"></strong>
+										<input type="radio" name="star" value="4"/> <strong class="star star4"></strong>
+										<input type="radio" name="star" value="3"/> <strong class="star star3"></strong>
+										<input type="radio" name="star" value="2"/> <strong class="star star2"></strong>
+										<input type="radio" name="star" value="1"/> <strong class="star star1"></strong>
+									</li>
+
+									<li>
+										<label for="">评价内容：</label>
+										<textarea name="content" id="" cols="" rows=""></textarea>
+									</li>
+									<li id="yx_li">
+										<label for="">印　　象：</label>
+										<input type="text" name="yx_name" size="80px">多个印象请用,隔开
+									</li>
+									<li>
+										<label for="">&nbsp;</label>
+										<input type="button" value="提交评论"  id="comment_btn" class="comment_btn"/>
+									</li>
+								</ul>
+							</form>
+						</div>
+						<!--  评论表单 end-->
+
+					</div>
+					<!-- 商品评论 end -->
+
+					<!-- 售后保障 start -->
+					<div class="after_sale mt15 none detail_div">
+						<div>
+							<p>本产品全国联保，享受三包服务，质保期为：一年质保 <br />如因质量问题或故障，凭厂商维修中心或特约维修点的质量检测证明，享受7日内退货，15日内换货，15日以上在质保期内享受免费保修等三包服务！</p>
+							<p>售后服务电话：800-898-9006 <br />品牌官方网站：http://www.lenovo.com.cn/</p>
+
+						</div>
+
+						<div>
+							<h3>服务承诺：</h3>
+							<p>本商城向您保证所售商品均为正品行货，京东自营商品自带机打发票，与商品一起寄送。凭质保证书及京东商城发票，可享受全国联保服务（奢侈品、钟表除外；奢侈品、钟表由本商城联系保修，享受法定三包售后服务），与您亲临商场选购的商品享受相同的质量保证。本商城还为您提供具有竞争力的商品价格和运费政策，请您放心购买！</p>
+
+							<p>注：因厂家会在没有任何提前通知的情况下更改产品包装、产地或者一些附件，本司不能确保客户收到的货物与商城图片、产地、附件说明完全一致。只能确保为原厂正货！并且保证与当时市场上同样主流新品一致。若本商城没有及时更新，请大家谅解！</p>
+
+						</div>
+
+						<div>
+							<h3>权利声明：</h3>
+							<p>本商城上的所有商品信息、客户评价、商品咨询、网友讨论等内容，是京东商城重要的经营资源，未经许可，禁止非法转载使用。</p>
+							<p>注：本站商品信息均来自于厂商，其真实性、准确性和合法性由信息拥有者（厂商）负责。本站不提供任何保证，并不承担任何法律责任。</p>
+
+						</div>
+					</div>
+					<!-- 售后保障 end -->
+
+				</div>
+			</div>
+			<!-- 商品详情 end -->
+
+
+		</div>
+		<!-- 商品信息内容 end -->
+
+
+	</div>
+	<!-- 商品页面主体 end -->
+<div style="clear:both;"></div>
+
+<!-- 底部导航 start -->
+<div class="bottomnav w1210 bc mt10">
+    <div class="bnav1">
+        <h3><b></b> <em>购物指南</em></h3>
+        <ul>
+            <li><a href="">购物流程</a></li>
+            <li><a href="">会员介绍</a></li>
+            <li><a href="">团购/机票/充值/点卡</a></li>
+            <li><a href="">常见问题</a></li>
+            <li><a href="">大家电</a></li>
+            <li><a href="">联系客服</a></li>
+        </ul>
+    </div>
+
+    <div class="bnav2">
+        <h3><b></b> <em>配送方式</em></h3>
+        <ul>
+            <li><a href="">上门自提</a></li>
+            <li><a href="">快速运输</a></li>
+            <li><a href="">特快专递（EMS）</a></li>
+            <li><a href="">如何送礼</a></li>
+            <li><a href="">海外购物</a></li>
+        </ul>
+    </div>
+
+
+    <div class="bnav3">
+        <h3><b></b> <em>支付方式</em></h3>
+        <ul>
+            <li><a href="">货到付款</a></li>
+            <li><a href="">在线支付</a></li>
+            <li><a href="">分期付款</a></li>
+            <li><a href="">邮局汇款</a></li>
+            <li><a href="">公司转账</a></li>
+        </ul>
+    </div>
+
+    <div class="bnav4">
+        <h3><b></b> <em>售后服务</em></h3>
+        <ul>
+            <li><a href="">退换货政策</a></li>
+            <li><a href="">退换货流程</a></li>
+            <li><a href="">价格保护</a></li>
+            <li><a href="">退款说明</a></li>
+            <li><a href="">返修/退换货</a></li>
+            <li><a href="">退款申请</a></li>
+        </ul>
+    </div>
+
+    <div class="bnav5">
+        <h3><b></b> <em>特色服务</em></h3>
+        <ul>
+            <li><a href="">夺宝岛</a></li>
+            <li><a href="">DIY装机</a></li>
+            <li><a href="">延保服务</a></li>
+            <li><a href="">家电下乡</a></li>
+            <li><a href="">京东礼品卡</a></li>
+            <li><a href="">能效补贴</a></li>
+        </ul>
+    </div>
+</div>
+<!-- 底部导航 end -->
+
+
+<script language="JavaScript">
+    //		获得指定页数的评论
+	var goods_id=61;
+	var p=1;
+	var cache=[];
+//	制作缓存函数
+//	格式  {[1,数据,翻页],[2,数据,翻页],.....}
+	function getcache(page) {
+		for (var i=0;i<cache.length;i++)
+		{
+            if(page===cache[i][0])
+			{
+//               证明有缓存
+                return cache[i];
+			}
+		}
+		return false;
+    }
+//	根据指定页数获取内容，并且做成缓存
+    function getcomment(page) {
+	    var cc=getcache(page);
+        if(cc!==false)
+		{
+//       证明有缓存，不用走ajax
+            $('#content_list').html(cc[1]);
+            $('#page_div').html(cc[2]);
+			return;
+		}
+        $.ajax({
+            url:'/Home/comment/getCommentByAjax/goods_id/'+goods_id+'/page/'+page,
+            type:'get',
+            dataType:'json',
+            success:function (data) {
+//                当page等于1时，请求好评率以及印象
+                if(page==1)
+				{
+                 $('.hao').html(data['hao']);
+                 $('.zhong').html(data['zhong']);
+                 $('.cha').html(data['cha']);
+                 $('#hao_width').css('width',data['hao']);
+                 $('#zhong_width').css('width',data['zhong']);
+                 $('#cha_width').css('width',data['cha']);
+//									<dd><span>屏幕大</span><em>(1953)</em></dd>
+					var yx='';
+					var yxhtml='';
+                 for (var i in data['yx'])
+				 {
+                     yx+="<dd><span>"+data['yx'][i]['yx_name']+"</span><em>"+data['yx'][i]['yx_count']+"</em></dd>";
+                     yxhtml+="<input type='checkbox' name='yx_id[]' value='"+data['yx'][i]['id']+"'>"+data['yx'][i]['yx_name']+"　";
+				 }
+				 var _yxhtml="<li><label for=''>印象选择：</label>"+yxhtml+"</li>"
+                 $('.buyer dl').append(yx);
+                 $('#yx_li').before(_yxhtml);
+
+
+
+				}
+
+
+                if(data['pagecount']<page)
+				{
+                    getcomment(data['pagecount']);
+				}
+				if(page<1)
+				{
+                    getcomment(1);
+				}
+                var newdata=eval(data);
+                var html='';
+                for(var i in data['data'])
+                {
+                    html+="<div class='comment_items mt10'><div class='user_pic'><dl><dt><a href=''><img src='"+data['data'][i]['face']+"' alt='' /></a></dt><dd><a href=''>"+data['data'][i]['username']+"</a></dd></dl></div><div class='item'><div class='title'><span>"+data['data'][i]['addtime']+"</span><strong class='star star"+data['data'][i]['star']+"'></strong></div><div class='comment_content'>"+data['data'][i]['content']+"</div><div class='btns'><a href='javascript:;' class='reply' data-id='"+data['data'][i]['id']+"'>回复(<span class='reply_span'>"+data['data'][i]['reply']+"</span>)</a><a href='javascript:;' class='useful' data-id='"+data['data'][i]['id']+"'>有用(<span class='yy_span'>"+data['data'][i]['clicked']+"</span>)</a></div><div></div><ul class='reply_ul'>";
+                     for(var j in data['data'][i]['comment_reply'])
+					 {
+                         html+="<li><img src='"+data['data'][i]['comment_reply'][j]['face']+"' width='50px'><p>"+data['data'][i]['comment_reply'][j]['username']+" "+data['data'][i]['comment_reply'][j]['addtime']+" 回复:</p><p>"+data['data'][i]['comment_reply'][j]['content']+"</p></li>";
+					 }
+					html+="</ul></div><div class='cornor'></div></div>";
+                }
+                $('#content_list').html(html);
+
+
+
+
+
+
+
+
+
+
+                var pagestr='';
+//				如果页数小于4，就不需要上一页下一页首页了
+                if(data['pagecount']<=4)
+				{
+                    for (var j=1;j<=data['pagecount'];j++)
+                    {
+
+                        var select='';
+                        if(j==page)
+                        {
+                            select="class='cur'";
+                        }
+                        pagestr+="<a href='javascript:;' onclick='getcomment("+j+")' "+select+">"+j+"</a>";
+                    }
+				}
+//				大于时，直接写死就好
+                else
+				{
+				    if(page!=1) {
+                        pagestr += "<a href='javascript:;' onclick='getcomment(1)'>首页</a>";
+                        pagestr += "<a href='javascript:;' onclick='getcomment(" + (page - 1) + ")'>上一页</a>";
+                    }
+                    if(page-2>=1)
+					{
+                        pagestr+="<a href='javascript:;' onclick='getcomment("+(page-2)+")' "+select+">"+(page-2)+"</a>";
+					}
+                    if(page-1>=1)
+                    {
+                        pagestr+="<a href='javascript:;' onclick='getcomment("+(page-1)+")' "+select+">"+(page-1)+"</a>";
+                    }
+
+                    pagestr+="<a href='javascript:;' class='cur' onclick='getcomment("+(page)+")' "+select+">"+(page)+"</a>";
+                    if(page+1<=data['pagecount'])
+					{
+                        pagestr+="<a href='javascript:;' onclick='getcomment("+(page+1)+")' "+select+">"+(page+1)+"</a>";
+					}
+                    if(page+2<=data['pagecount']) {
+                        pagestr += "<a href='javascript:;' onclick='getcomment(" + (page + 2) + ")' " + select + ">" + (page + 2) + "</a>";
+                    }
+                    if(page!=data['pagecount'])
+                    {
+                    pagestr+="<a href='javascript:;' onclick='getcomment("+(page+1)+")'>下一页</a>";
+                    pagestr+="<a href='javascript:;' onclick='getcomment("+data['pagecount']+")'>末页</a>";
+                    }
+				}
+                $('#page_div').html(pagestr);
+//                将数据放到客户端缓存中
+				cache.push([page,html,pagestr]);
+            }
+        });
+    }
+    getcomment(p);
+//	最近浏览历史
+	$.ajax({
+		url:'/Home/Goods/getHistory/id/'+goods_id,
+		type:'get',
+		dataType:'json',
+		success:function (data) {
+			var newdata=eval(data);
+			var str='';
+			for(var i in newdata)
+			{
+               str+="<dl><dt><a href='/Home/Goods/goods/id/"+newdata[i]['id']+"'><img src='"+newdata[i]['mid_logo']+"' alt='' /></a></dt><dd><a href='/Home/Goods/goods/id/"+newdata[i]['id']+"'>"+newdata[i]['goods_name']+"</a></dd></dl>";
+			}
+            $('#history_dl').append(str);
+        }
+	});
+	$(function () {
+		$('#cleanhistory').on('click',function () {
+			if(confirm('确定要清空浏览历史吗?'))
+			{
+                $.ajax({
+                    url:'/Home/Goods/cleanHistory',
+                    type:'get',
+                    dataType:'json',
+                    success:function (data) {
+                        alert('清空成功');
+                        location.reload();
+                    }
+                });
+			}
+        });
+//		计算会员价格
+		$.ajax({
+			url:'/Home/Goods/getMemberPriceByAjax/id/'+goods_id,
+			type:'get',
+			dataType:'json',
+			success:function (data) {
+				var newdata=eval(data)
+				var newli='￥'+data['price'];
+				$('#member_price').append(newli);
+            }
+		});
+//		提交评论
+		$('#comment_btn').on('click',function () {
+            var form=$('#comment_form');
+            var sendData=form.serialize();
+            $.ajax({
+               url:'/Home/Comment/add',
+				type:'post',
+				data:sendData,
+				dataType:'json',
+				success:function (data) {
+					var newdata=eval(data);
+					if(data['status']==0)
+					{
+
+					    if(data['info']=='必须先登录')
+						{
+                            layer.msg(data['info'], {
+                                btn: ['确定'], //按钮
+                                end:function () {
+                                    layer.open({
+                                        type: 2,
+                                        title: '登陆',
+                                        shadeClose: true,
+                                        shade: 0.8,
+                                        area: ['370px', '425px'],
+                                        content: '/Home/member/minilogin' //iframe的url
+                                    });
+                                }
+                            });
+                        }
+						else {
+                            layer.msg(data['info'], {
+                                btn: ['确定'], //按钮
+								end:function () {
+                                    form[0].reset();
+                                }
+                            });
+
+						}
+					}
+					else
+					{
+                        form[0].reset();
+                        var html="<div class='comment_items mt10 none'><div class='user_pic'><dl><dt><a href=''><img src='"+data['info']['m_face']+"' alt='' /></a></dt><dd><a href=''>"+data['info']['m_username']+"</a></dd></dl></div><div class='item'><div class='title'><span>"+data['info']['addtime']+"</span><strong class='star star"+data['info']['star']+"'></strong></div><div class='comment_content'>"+data['info']['content']+"</div><div class='btns'><a href='javascript:;' class='reply' data-id='"+data['info']['id']+"'>回复(<span class='reply_span'>0</span>)</a><a href='javascript:;' class='useful' data-id='"+data['data'][i]['id']+"'>有用(<span class='yy_span'>0</span>)</a></div><div></div><ul class='reply_ul'></ul></div><div class='cornor'></div></div>";
+//                        转为jq对象
+                        var newhtml=$(html);
+                        $('#content_list').prepend(newhtml);
+                        $('body').animate({
+							'scrollTop':'750px'
+						},1000,function () {
+                            newhtml.fadeIn(2000);
+                        });
+					}
+                }
+            });
+        })
+//		制作回复框
+        $('.reply').live('click',function () {
+            var comment_id=$(this).attr('data-id');
+           var form="<br><hr style='margin-top: 15px'><form><textarea name='content' rows='6' style='width: 100%'></textarea><br><div style='float: right'><input type='button' class='submit_btn' value='回　复'>　<input type='button' class='cancel_btn' value='取　消'></div><input type='hidden' name='comment_id' value='"+comment_id+"'></form>";
+           $(this).parent().next().html(form);
+
+        });
+//		取消按钮
+		$('.cancel_btn').live('click',function () {
+			$(this).parent().parent().parent().empty();
+        })
+//		回复按钮
+        $('.submit_btn').live('click',function () {
+            var _this=$(this);
+            var sendData=$(this).parent().parent().serialize();
+            $.ajax({
+				url:'/Home/Comment/reply',
+				data:sendData,
+				type:'post',
+				dataType:'json',
+				success:function (data) {
+					var newdata=eval(data);
+					if(data['status']==0)
+					{
+                        if(data['info']=='必须先登录')
+                        {
+                            layer.msg(data['info'], {
+                                btn: ['确定'], //按钮
+                                end:function () {
+                                    layer.open({
+                                        type: 2,
+                                        title: '登陆',
+                                        shadeClose: true,
+                                        shade: 0.8,
+                                        area: ['370px', '425px'],
+                                        content: '/Home/member/minilogin' //iframe的url
+                                    });
+                                }
+                            });
+                        }
+                        else {
+                            layer.msg(data['info'], {
+                                btn: ['确定'], //按钮
+                                end:function () {
+                                    form[0].reset();
+                                }
+                            });
+
+                        }
+					}
+					else
+					{
+						var ulstr="<li><img src='"+newdata['info']['m_face']+"' width='50px'><p>"+newdata['info']['m_username']+" "+newdata['info']['addtime']+" 回复:</p><p>"+newdata['info']['content']+"</p></li>";
+                        _this.parent().parent().parent().next().append(ulstr).end();
+                        var numb=_this.parent().parent().parent().prev().find('span').first().text();
+                        _this.parent().parent().parent().prev().find('span').first().text(parseInt(numb)+1);
+                        layer.msg('回复成功~', {icon: 1});
+					}
+                }
+			})
+        });
+		$('.useful').live('click',function () {
+			var _this=$(this);
+			var data_id=$(this).attr('data-id');
+			$.ajax({
+				url:'/Home/Comment/usefulByAjax/comment_id/'+data_id,
+				type:'get',
+				dataType:'json',
+				success:function (data) {
+					var newdata=eval(data);
+					if(newdata['status']==0)
+					{
+                        if(data['info']=='必须先登录')
+                        {
+                            layer.msg(data['info'], {
+                                btn: ['确定'], //按钮
+                                end:function () {
+                                    layer.open({
+                                        type: 2,
+                                        title: '登陆',
+                                        shadeClose: true,
+                                        shade: 0.8,
+                                        area: ['370px', '425px'],
+                                        content: '/Home/member/minilogin' //iframe的url
+                                    });
+                                }
+                            });
+                        }
+                        else {
+                            layer.msg(data['info'], {
+                                btn: ['确定'], //按钮
+                                end:function () {
+                                    form[0].reset();
+                                }
+                            });
+
+                        }
+					}
+					else
+					{
+                        layer.tips(data['info'], _this, {
+                            tips: [1, '#3595CC'],
+                            time: 4000
+                        });
+                        var numb=_this.find('span').text();
+                        _this.find('span').text(parseInt(numb)+1);
+					}
+                }
+			})
+        })
+    });
+</script>
+
+<div style="clear:both;"></div>
+<!-- 底部版权 start -->
+<div class="footer w1210 bc mt10">
+    <p class="links">
+        <a href="">关于我们</a> |
+        <a href="">联系我们</a> |
+        <a href="">人才招聘</a> |
+        <a href="">商家入驻</a> |
+        <a href="">千寻网</a> |
+        <a href="">奢侈品网</a> |
+        <a href="">广告服务</a> |
+        <a href="">移动终端</a> |
+        <a href="">友情链接</a> |
+        <a href="">销售联盟</a> |
+        <a href="">京西论坛</a>
+    </p>
+    <p class="copyright">
+        © guaosi 版权所有，并保留所有权利。  ICP备案证书号:闽ICP备17020416号
+    </p>
+    <p class="auth">
+        <a href=""><img src="/Public/Home/images/xin.png" alt="" /></a>
+        <a href=""><img src="/Public/Home/images/kexin.jpg" alt="" /></a>
+        <a href=""><img src="/Public/Home/images/police.jpg" alt="" /></a>
+        <a href=""><img src="/Public/Home/images/beian.gif" alt="" /></a>
+    </p>
+</div>
+<!-- 底部版权 end -->
+<!---->
+</body>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            url:'/Home/Member/checkLoginByAjax',
+            type:'get',
+            dataType:'json',
+            success:function (data) {
+                var newdata=eval(data);
+                var li='';
+                if(newdata['flag']==1)
+                {
+                 li+="<li>您好，"+newdata['name']+" [<a href='/Home/Member/logout'>退出</a>]</li>";
+
+                }
+                else
+                {
+                    li+="<li>您好，欢迎来到京西！[<a href='/Home/Member/login'>登录</a>] [<a href='/Home/Member/regist'>免费注册</a>] </li>";
+                }
+                $('#checklogin').append(li);
+            }
+        });
+    })
+</script>
+</html>

@@ -1,0 +1,59 @@
+<layout name="layout" />
+
+<!-- 列表 -->
+<div class="list-div" id="listDiv">
+	<table cellpadding="3" cellspacing="1">
+    	<tr>
+            <th >权限名称</th>
+            <th >模块名称</th>
+            <th >控制器名称</th>
+            <th >方法名称</th>
+			<th width="60">操作</th>
+        </tr>
+		<?php foreach ($data as $k => $v): ?>            
+			<tr class="tron">
+				<td><?php echo str_repeat('-', 8*$v['level']); ?><?php echo $v['pri_name']; ?></td>
+				<td><?php echo $v['module_naame']; ?></td>
+				<td><?php echo $v['controller_naame']; ?></td>
+				<td><?php echo $v['action_naame']; ?></td>
+				<td align="center"><a href="__CONTROLLER__/edit/id/{$v['id']}">修改</a> | <a href="#" class="dela" data-id="{$v['id']}">删除</a></td>
+	        </tr>
+        <?php endforeach; ?> 
+	</table>
+</div>
+<script type="text/javascript" src="__PUBLIC__/umeditor/third-party/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.tron').mouseover(function () {
+            $(this).find('td').css('backgroundColor','#DEE7F5');
+        });
+        $('.tron').mouseout(function () {
+            $(this).find('td').css('backgroundColor','#FFF');
+        });
+        $('.dela').on('click',function () {
+            if(confirm('确定要删除吗？'))
+            {
+                var data_id=$(this).attr('data-id');
+                $.ajax({
+                    url:'__CONTROLLER__/del/id/'+data_id,
+                    type:'get',
+                    dataType:'json',
+                    success:function (data) {
+                        var newdata=eval(data);
+                        if(data['flag']==1)
+                        {
+                            alert('删除成功');
+                            location.reload();
+                        }
+                        else
+                        {
+                            alert('删除失败');
+                        }
+                    }
+                });
+            }
+
+        });
+    });
+
+</script>
