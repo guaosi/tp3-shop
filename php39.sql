@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 腾讯云
-Source Server Version : 50556
-Source Host           : 118.89.20.47:3306
+Source Server         : 新腾讯云
+Source Server Version : 50560
+Source Host           : 118.126.105.155:3306
 Source Database       : php39
 
 Target Server Type    : MYSQL
-Target Server Version : 50556
+Target Server Version : 50560
 File Encoding         : 65001
 
-Date: 2018-06-14 22:44:56
+Date: 2018-06-16 17:34:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,7 +29,7 @@ CREATE TABLE `p39_admin` (
 -- ----------------------------
 -- Records of p39_admin
 -- ----------------------------
-INSERT INTO `p39_admin` VALUES ('1', 'guaosi', 'de48ad76dadd3d693eedeaa2713db7bb');
+INSERT INTO `p39_admin` VALUES ('1', 'admin', 'de48ad76dadd3d693eedeaa2713db7bb');
 
 -- ----------------------------
 -- Table structure for p39_admin_role
@@ -340,6 +340,7 @@ INSERT INTO `p39_ext_category` VALUES ('23', '67');
 INSERT INTO `p39_ext_category` VALUES ('1', '68');
 INSERT INTO `p39_ext_category` VALUES ('24', '69');
 INSERT INTO `p39_ext_category` VALUES ('23', '70');
+INSERT INTO `p39_ext_category` VALUES ('3', '71');
 
 -- ----------------------------
 -- Table structure for p39_goods
@@ -377,7 +378,7 @@ CREATE TABLE `p39_goods` (
   KEY `is_on_sale` (`is_on_sale`),
   KEY `brand_id` (`brand_id`),
   KEY `cat_id` (`cat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8 COMMENT='商品表';
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 COMMENT='商品表';
 
 -- ----------------------------
 -- Records of p39_goods
@@ -409,6 +410,7 @@ INSERT INTO `p39_goods` VALUES ('67', '坚果', '3000.00', '2000.00', '<p><img s
 INSERT INTO `p39_goods` VALUES ('68', '华丽的变身', '5000.00', '800.00', '<p><img src=\"http://118.89.20.47/shoptp3/Public/umeditor/php/upload/20170727/15011630573021.png\" alt=\"15011630573021.png\" /></p><p><img src=\"http://118.89.20.47/shoptp3/Public/umeditor/php/upload/20170727/15011630592343.png\" alt=\"15011630592343.png\" /></p><p><img src=\"http://118.89.20.47/shoptp3/Public/umeditor/php/upload/20170727/15011630618754.jpg\" alt=\"15011630618754.jpg\" /></p><p><br /></p>', '是', '否', '1501163063', '/Public/Upload/2017-07-27/5979ee378c147.png', '/Public/Upload/2017-07-27/sm_5979ee378c147.png', '/Public/Upload/2017-07-27/mid_5979ee378c147.png', '/Public/Upload/2017-07-27/big_5979ee378c147.png', '/Public/Upload/2017-07-27/mbig_5979ee378c147.png', '1', '1', '0', '0.00', '0', '0', '是', '是', '是', '100', '是', '0');
 INSERT INTO `p39_goods` VALUES ('69', '好的完美', '600.00', '500.00', '<p><img src=\"http://shoptp3.guaosi.com.cn/Public/umeditor/php/upload/20170811/1502452579658.jpg\" alt=\"1502452579658.jpg\" /></p>', '是', '否', '1502452599', '/Public/Upload/2017-08-11/598d9b772ed6f.jpg', '/Public/Upload/2017-08-11/sm_598d9b772ed6f.jpg', '/Public/Upload/2017-08-11/mid_598d9b772ed6f.jpg', '/Public/Upload/2017-08-11/big_598d9b772ed6f.jpg', '/Public/Upload/2017-08-11/mbig_598d9b772ed6f.jpg', '0', '1', '2', '400.00', '1501516800', '1504108800', '否', '是', '是', '150', '否', '0');
 INSERT INTO `p39_goods` VALUES ('70', '花见花开', '600.00', '500.00', '', '是', '否', '1502454100', '/Public/Upload/2017-08-11/598da154778ef.jpg', '/Public/Upload/2017-08-11/sm_598da154778ef.jpg', '/Public/Upload/2017-08-11/mid_598da154778ef.jpg', '/Public/Upload/2017-08-11/big_598da154778ef.jpg', '/Public/Upload/2017-08-11/mbig_598da154778ef.jpg', '0', '1', '0', '0.00', '0', '0', '否', '是', '否', '100', '否', '0');
+INSERT INTO `p39_goods` VALUES ('71', '苹果', '5000.00', '4000.00', '<p>这是苹果啊<img src=\"http://shoptp3.guaosi.com/Public/umeditor/php/upload/20180615/15289958872357.jpg\" alt=\"15289958872357.jpg\" /></p>', '是', '否', '1528995912', '/Public/Upload/2018-06-15/5b22a04810b83.jpg', '/Public/Upload/2018-06-15/sm_5b22a04810b83.jpg', '/Public/Upload/2018-06-15/mid_5b22a04810b83.jpg', '/Public/Upload/2018-06-15/big_5b22a04810b83.jpg', '/Public/Upload/2018-06-15/mbig_5b22a04810b83.jpg', '4', '2', '5', '3000.00', '1528995840', '1530288000', '是', '是', '是', '100', '否', '0');
 
 -- ----------------------------
 -- Table structure for p39_goods_attr
@@ -422,7 +424,7 @@ CREATE TABLE `p39_goods_attr` (
   PRIMARY KEY (`id`),
   KEY `attr_id` (`attr_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=206 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p39_goods_attr
@@ -461,6 +463,10 @@ INSERT INTO `p39_goods_attr` VALUES ('202', '联发科', '5', '65');
 INSERT INTO `p39_goods_attr` VALUES ('203', '高通骁龙', '5', '65');
 INSERT INTO `p39_goods_attr` VALUES ('204', '4G', '2', '69');
 INSERT INTO `p39_goods_attr` VALUES ('205', '750G', '10', '69');
+INSERT INTO `p39_goods_attr` VALUES ('206', '红色', '4', '71');
+INSERT INTO `p39_goods_attr` VALUES ('207', '黄色', '4', '71');
+INSERT INTO `p39_goods_attr` VALUES ('208', '联发科', '5', '71');
+INSERT INTO `p39_goods_attr` VALUES ('209', '高通骁龙', '5', '71');
 
 -- ----------------------------
 -- Table structure for p39_goods_number
@@ -491,7 +497,7 @@ INSERT INTO `p39_goods_number` VALUES ('63', '600', '185,192');
 INSERT INTO `p39_goods_number` VALUES ('63', '671', '186,190');
 INSERT INTO `p39_goods_number` VALUES ('63', '800', '186,191');
 INSERT INTO `p39_goods_number` VALUES ('63', '0', '186,192');
-INSERT INTO `p39_goods_number` VALUES ('62', '89', '');
+INSERT INTO `p39_goods_number` VALUES ('62', '88', '');
 INSERT INTO `p39_goods_number` VALUES ('58', '194', '177,178');
 INSERT INTO `p39_goods_number` VALUES ('69', '499', '204,205');
 
@@ -508,7 +514,7 @@ CREATE TABLE `p39_goods_pic` (
   `goods_id` mediumint(8) unsigned NOT NULL COMMENT '商品ID',
   PRIMARY KEY (`id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p39_goods_pic
@@ -533,6 +539,7 @@ INSERT INTO `p39_goods_pic` VALUES ('30', '/Public/Upload/2017-07-21/5971c32abf1
 INSERT INTO `p39_goods_pic` VALUES ('31', '/Public/Upload/2017-07-22/597331406b32b.jpg', '/Public/Upload/2017-07-22/sm_597331406b32b.jpg', '/Public/Upload/2017-07-22/mid_597331406b32b.jpg', '/Public/Upload/2017-07-22/big_597331406b32b.jpg', '67');
 INSERT INTO `p39_goods_pic` VALUES ('32', '/Public/Upload/2017-07-22/597331406bdd9.jpg', '/Public/Upload/2017-07-22/sm_597331406bdd9.jpg', '/Public/Upload/2017-07-22/mid_597331406bdd9.jpg', '/Public/Upload/2017-07-22/big_597331406bdd9.jpg', '67');
 INSERT INTO `p39_goods_pic` VALUES ('33', '/Public/Upload/2017-08-11/598d9b775b8c8.jpg', '/Public/Upload/2017-08-11/sm_598d9b775b8c8.jpg', '/Public/Upload/2017-08-11/mid_598d9b775b8c8.jpg', '/Public/Upload/2017-08-11/big_598d9b775b8c8.jpg', '69');
+INSERT INTO `p39_goods_pic` VALUES ('34', '/Public/Upload/2018-06-15/5b22a04822269.jpg', '/Public/Upload/2018-06-15/sm_5b22a04822269.jpg', '/Public/Upload/2018-06-15/mid_5b22a04822269.jpg', '/Public/Upload/2018-06-15/big_5b22a04822269.jpg', '71');
 
 -- ----------------------------
 -- Table structure for p39_member
@@ -550,7 +557,7 @@ CREATE TABLE `p39_member` (
 -- ----------------------------
 -- Records of p39_member
 -- ----------------------------
-INSERT INTO `p39_member` VALUES ('3', 'guaosi', 'de48ad76dadd3d693eedeaa2713db7bb', '/Public/Home/images/user2.jpg', '18833');
+INSERT INTO `p39_member` VALUES ('3', 'admin', 'de48ad76dadd3d693eedeaa2713db7bb', '/Public/Home/images/user2.jpg', '18933');
 
 -- ----------------------------
 -- Table structure for p39_member_level
@@ -662,37 +669,11 @@ CREATE TABLE `p39_order` (
   PRIMARY KEY (`id`),
   KEY `member_id` (`member_id`),
   KEY `addtime` (`addtime`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p39_order
 -- ----------------------------
-INSERT INTO `p39_order` VALUES ('6', '3', '1500287507', '是', '1500732840', '1800.00', '', '', '', '', '', '', '0', '');
-INSERT INTO `p39_order` VALUES ('7', '3', '1500287773', '是', '0', '800.00', '张三', '12345678910', '北京', '朝阳区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('8', '3', '1500288202', '否', '0', '3600.00', '张三', '12345678910', '上海', '东城区', '西三旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('9', '3', '1500288397', '是', '0', '2000.00', '张三', '12345678910', '北京', '朝阳区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('10', '3', '1500302688', '否', '0', '4200.00', '张三', '12345678910', '北京', '朝阳区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('11', '3', '1500302766', '否', '0', '4800.00', '张三', '12345678910', '北京', '朝阳区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('12', '3', '1500302882', '是', '0', '4800.00', '张三', '12345678910', '北京', '朝阳区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('14', '3', '1500304776', '是', '0', '600.00', '张三', '12345678910', '北京', '朝阳区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('15', '3', '1500307057', '否', '0', '600.00', '张三', '12345678910', '北京', '朝阳区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('16', '3', '1500347097', '是', '0', '1200.00', '张三', '12345678910', '北京', '东城区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('18', '3', '1500349881', '是', '1500874043', '600.00', '张三', '12345678910', '北京', '朝阳区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('19', '3', '1500360098', '是', '1500732268', '600.00', '张三', '12345678910', '北京', '东城区', '西三旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('20', '3', '1500719242', '否', '0', '700.00', '张三', '12345678910', '北京', '朝阳区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('21', '3', '1500723878', '否', '0', '600.00', '张三', '12345678910', '北京', '朝阳区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('22', '3', '1500732352', '否', '0', '600.00', '张三', '12345678910', '北京', '朝阳区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('23', '5', '1500738103', '否', '0', '100.00', '张三', '12345678910', '北京', '朝阳区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('24', '6', '1500739256', '否', '0', '300.00', 'a', '12345678912', '北京', '朝阳区', '西二旗', 'a', '0', '');
-INSERT INTO `p39_order` VALUES ('25', '7', '1500740744', '是', '1500741355', '100.00', 'aaa', '12345678912', '北京', '朝阳区', '西二旗', '2a', '0', '');
-INSERT INTO `p39_order` VALUES ('26', '10', '1500740979', '是', '1500741238', '800.00', '脾气', '12345678910', '北京', '东城区', '西二旗', '吧', '0', '');
-INSERT INTO `p39_order` VALUES ('27', '3', '1500873691', '否', '0', '500.00', '张三', '12345678910', '上海', '东城区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('28', '12', '1501160975', '是', '1501161749', '800.00', '111', '12345678901', '北京', '朝阳区', '西三旗', '111', '0', '');
-INSERT INTO `p39_order` VALUES ('29', '3', '1501161250', '是', '1501161378', '1000.00', '张三', '12345678910', '北京', '东城区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('30', '3', '1502451711', '是', '1502451766', '600.00', '张三', '12345678910', '北京', '朝阳区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('31', '3', '1502452001', '否', '0', '500.00', '张三', '12345678910', '北京', '朝阳区', '西三旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('32', '3', '1502453067', '是', '1502453106', '300.00', '张三', '12345678910', '北京', '东城区', '西二旗', '北京大学', '0', '');
-INSERT INTO `p39_order` VALUES ('33', '3', '1504680409', '否', '0', '500.00', '张三', '12345678910', '北京', '朝阳区', '西三旗', '北京大学', '0', '');
 
 -- ----------------------------
 -- Table structure for p39_order_goods
@@ -708,7 +689,7 @@ CREATE TABLE `p39_order_goods` (
   PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p39_order_goods
@@ -748,6 +729,7 @@ INSERT INTO `p39_order_goods` VALUES ('35', '30', '62', '', '1', '100');
 INSERT INTO `p39_order_goods` VALUES ('36', '31', '63', '184,191', '1', '500');
 INSERT INTO `p39_order_goods` VALUES ('37', '32', '69', '204,205', '1', '300');
 INSERT INTO `p39_order_goods` VALUES ('38', '33', '63', '186,190', '1', '500');
+INSERT INTO `p39_order_goods` VALUES ('39', '34', '62', '', '1', '100');
 
 -- ----------------------------
 -- Table structure for p39_pri_role
@@ -887,7 +869,7 @@ CREATE TABLE `p39_sphinx` (
 -- ----------------------------
 -- Records of p39_sphinx
 -- ----------------------------
-INSERT INTO `p39_sphinx` VALUES ('70');
+INSERT INTO `p39_sphinx` VALUES ('71');
 
 -- ----------------------------
 -- Table structure for p39_type

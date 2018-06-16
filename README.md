@@ -1,37 +1,161 @@
-﻿## 简介
+基于ThinkPHP3.2.3制作电子商城,支持PHP7.
+===============
+> 🚀 搜索使用`Sphinx`,页面开启缓存,加快电子商城的基础速度.
+## 特性
 
-ThinkPHP 是一个免费开源的，快速、简单的面向对象的 轻量级PHP开发框架 ，创立于2006年初，遵循Apache2开源协议发布，是为了敏捷WEB应用开发和简化企业应用开发而诞生的。ThinkPHP从诞生以来一直秉承简洁实用的设计原则，在保持出色的性能和至简的代码的同时，也注重易用性。并且拥有众多的原创功能和特性，在社区团队的积极参与下，在易用性、扩展性和性能方面不断优化和改进，已经成长为国内最领先和最具影响力的WEB应用开发框架，众多的典型案例确保可以稳定用于商业以及门户级的开发。
+- 使用Sphinx作为搜索引擎
 
-## 全面的WEB开发特性支持
+- 搜索结果可以根据商品筛选条件再次筛选
 
-最新的ThinkPHP为WEB应用开发提供了强有力的支持，这些支持包括：
+- 接入支付宝，实现在线支付
 
-*  MVC支持-基于多层模型（M）、视图（V）、控制器（C）的设计模式
-*  ORM支持-提供了全功能和高性能的ORM支持，支持大部分数据库
-*  模板引擎支持-内置了高性能的基于标签库和XML标签的编译型模板引擎
-*  RESTFul支持-通过REST控制器扩展提供了RESTFul支持，为你打造全新的URL设计和访问体验
-*  云平台支持-提供了对新浪SAE平台和百度BAE平台的强力支持，具备“横跨性”和“平滑性”，支持本地化开发和调试以及部署切换，让你轻松过渡，打造全新的开发体验。
-*  CLI支持-支持基于命令行的应用开发
-*  RPC支持-提供包括PHPRpc、HProse、jsonRPC和Yar在内远程调用解决方案
-*  MongoDb支持-提供NoSQL的支持
-*  缓存支持-提供了包括文件、数据库、Memcache、Xcache、Redis等多种类型的缓存支持
+- 回复支持楼层内回复
 
-## 大道至简的开发理念
+- 根据商品属性购买商品
 
-ThinkPHP从诞生以来一直秉承大道至简的开发理念，无论从底层实现还是应用开发，我们都倡导用最少的代码完成相同的功能，正是由于对简单的执着和代码的修炼，让我们长期保持出色的性能和极速的开发体验。在主流PHP开发框架的评测数据中表现卓越，简单和快速开发是我们不变的宗旨。
+- 后台完整的RBAC权限控制
 
-## 安全性
+- 支持商品属性库存量设定
 
-框架在系统层面提供了众多的安全特性，确保你的网站和产品安全无忧。这些特性包括：
+- 无限级分类
 
-*  XSS安全防护
-*  表单自动验证
-*  强制数据类型转换
-*  输入数据过滤
-*  表单令牌验证
-*  防SQL注入
-*  图像上传检测
+- 支持商品扩展分类
 
-## 商业友好的开源协议
+> ThinkPHP3的运行环境要求PHP5.3以上。
 
-ThinkPHP遵循Apache2开源协议发布。Apache Licence是著名的非盈利开源组织Apache采用的协议。该协议和BSD类似，鼓励代码共享和尊重原作者的著作权，同样允许代码修改，再作为开源或商业软件发布。
+## 体验地址
+
+> http://shoptp3.guaosi.com
+
+## 要求
+
+| 依赖 | 说明 |
+| -------- | -------- |
+| PHP| >=`5.3` |
+| Thinkphp| `3.2.3` |
+| MySQL| >=`5.5` |
+| nginx |用于网址代理解析|
+| 集成环境[可选的] | LNMP`>=1.5` |
+
+## 注意
+
+1. 自行导入数据库。
+2. 必须安装Sphinx，否则搜索没有结果。
+3. PHP7内置了`SphinxClient`,PHP5版本需要修改。
+4. 做了一次网站迁移上传的,应该没有什么问题,有关问题下面会说明.
+
+## 安装
+
+通过[Github](https://github.com/guaosi/tp3-shop),fork到自己的项目下
+```
+git clone git@github.com:<你的用户名>/tp3-shop.git
+```
+
+## 支付宝配置
+
+个人用户可以使用支付宝沙箱进行测试。
+修改 /alipay2/config.php
+根据字段要求自行填写
+
+## 数据库配置
+
+修改 /Application/Common/conf/config.php
+自行写入数据库账号密码
+
+> 创建数据库名为php39，自行导入php39.sql
+
+## 缓存配置
+使用的是ThinkPHP3.2.3自带的缓存,默认开启`商城首页`与`商品详情页`的缓存，如果修改请到如下文件自行修改
+> /Application/Home/Conf/config.php
+
+## PHP5修改
+因为PHP7内置了Sphinx的API,所以没有加载 `SphinxClient` 类,需要手动添加。
+找到  `/Application/Home/Controller/SearchController.php` 中的 `key_search` 方法，打开 `require_once './sphinxapi.php';` 注释即可.
+
+## sphinx
+### 安装
+1. 根据下面网址进行安装
+
+> http://www.bkjia.com/Linuxjc/938671.html 
+
+其中的 `phinx-1.3.2.tgz` 替换为 `sphinx-339e123.tar.gz` 支持php7(php5不用替换)
+
+2. 安装过程中,若在出现报错
+```
+cd csft-3.2.14
+./configure
+make&&make install
+```
+报错内容:
+> undefinedreferenceto`libiconv_open’
+
+解决办法:
+```
+vi /usr/local/coreseek-3.2.14/csft-3.2.14/configure
+将
+#define USE_LIBICONV 1
+改为
+define USE_LIBICONV 0
+```
+
+### 配置
+安装完成后进行文件迁移
+
+>将 /linux下的sphinx/update.sh 复制到 /usr/local/coreseek下
+
+> /linux下的sphinx/sphinx.conf 复制到 /usr/local/coreseek/etc下
+
+修改sphinx.conf文件,自行写入数据库账号密码
+
+然后执行
+
+```
+ /usr/local/coreseek/bin/indexer -c /usr/local/coreseek/etc/sphinx.conf goods
+```
+如果出现如下错误
+
+> Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock
+
+解决方法如下:
+
+```
+vim /usr/local/coreseek/etc/sphinx.conf
+在每个source中加入 sql_sock=/tmp/mysql.sock
+```
+
+添加定时任务,自动刷新商品索引
+
+```
+crontab -e
+加入
+*/5 * * * * /usr/local/coreseek/update.sh
+```
+
+## 使用
+
+后台开启(每次重启服务器都要开启，自动后台)
+```
+/usr/local/coreseek/bin/searchd -c /usr/local/coreseek/etc/sphinx.conf
+```
+余下的都是参考说明
+```
+初次增加索引
+/usr/local/coreseek/bin/indexer -c /usr/local/coreseek/etc/sphinx.conf goods
+后续增加索引
+/usr/local/coreseek/bin/indexer -c  /usr/local/coreseek/etc/sphinx.conf   goods_del  --rotate
+/usr/local/coreseek/bin/indexer -c  /usr/local/coreseek/etc/sphinx.conf --merge goods goods_del  --merge-dst-range is_updated 0 0 --rotate
+/usr/local/coreseek/bin/indexer -c  /usr/local/coreseek/etc/sphinx.conf   goods_zl  --rotate
+/usr/local/coreseek/bin/indexer -c  /usr/local/coreseek/etc/sphinx.conf --merge goods goods_zl --merge-dst-range is_updated 0 0 --rotate
+```
+
+## Nginx配置
+这个需求应该不大，就不写了.
+
+## 测试账号与密码
+以上都完成后
+前后台登录账号密码
+
+> admin  a123654
+
+后台地址:
+> http://网址/Admin/login/login.html
